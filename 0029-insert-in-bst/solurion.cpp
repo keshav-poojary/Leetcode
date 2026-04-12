@@ -91,3 +91,54 @@ public:
 
 // Time Complexity: O(h) where h is the height of the binary search tree.
 // Space Complexity: O(h) in the worst case when the binary search tree is skewed.
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
+ * };
+ */
+class Solution
+{
+public:
+    TreeNode *insertIntoBST(TreeNode *root, int val)
+    {
+        TreeNode *current = root;
+        TreeNode *parent = NULL;
+
+        while (current != NULL)
+        {
+            parent = current;
+            if (current->val < val)
+            {
+                current = current->right;
+            }
+            else
+            {
+                current = current->left;
+            }
+        }
+
+        if (parent == NULL)
+        {
+            return new TreeNode(val);
+        }
+
+        if (parent->val > val)
+        {
+            parent->left = new TreeNode(val);
+        }
+        else
+        {
+            parent->right = new TreeNode(val);
+        }
+
+        return root;
+    }
+};
