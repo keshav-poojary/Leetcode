@@ -22,7 +22,7 @@ public:
         if (candidates[index] <= target)
         {
             output.push_back(candidates[index]);
-            solve(ans, candidates, target - candidates[index], index, output);
+            solve(ans, candidates, target - candidates[index], index, output); // no index + 1 because we can reuse same elements
             output.pop_back();
         }
 
