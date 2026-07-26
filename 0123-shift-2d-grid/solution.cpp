@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution
+{
+public:
+    vector<vector<int>> shiftGrid(vector<vector<int>> &grid, int k)
+    {
+        int m = grid.size();
+        int n = grid[0].size();
+
+        int total = m * n;
+        vector<vector<int>> ans(m, vector<int>(n, 0));
+
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                int oldIndex = (i * n) + j;
+
+                int newIndex = (oldIndex + k) % total;
+
+                int newRow = newIndex / n;
+                int newCol = newIndex % n;
+                ans[newRow][newCol] = grid[i][j];
+            }
+        }
+
+        return ans;
+    }
+};
+
+// time complexity : o(n2)
+// space complexity : o(n2) -> for storing the answer in a new 2d vector
