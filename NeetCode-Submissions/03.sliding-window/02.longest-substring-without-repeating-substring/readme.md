@@ -19,28 +19,28 @@ Maintain a dynamic window and update counts as the window expands or shrinks to 
 4. Track the answer as the window updates to keep the logic linear.
 
 ## Code Trace
-1. `The right pointer expands the current window while the constraints remain satisfied.`
-2. `The left pointer shrinks the window only when the current state violates the condition, restoring a valid window.`
-3. `The answer is updated each time a better window is found.`
-4. `The loop finishes with the best valid window recorded in the answer.`
+1. `A hash map stores counts, indices, or state information keyed by the processed value.`
+2. `As the scan continues, the map reveals whether a value has already appeared or if a state must be updated.`
+3. `The current element is compared against the map to decide whether the operation should continue or terminate.`
+4. `The final result is computed from the map state after the full pass is complete.`
 
 ## Code Walkthrough
-- The right pointer expands the current window while the constraints remain satisfied.
-- The left pointer shrinks the window only when the current state violates the condition, restoring a valid window.
-- The answer is updated each time a better window is found.
-- The loop finishes with the best valid window recorded in the answer.
+- A hash map stores counts, indices, or state information keyed by the processed value.
+- As the scan continues, the map reveals whether a value has already appeared or if a state must be updated.
+- The current element is compared against the map to decide whether the operation should continue or terminate.
+- The final result is computed from the map state after the full pass is complete.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Create map for counts or index state] --> B[Scan each element]
-    B --> C{Is key already tracked?}
-    C -- Yes --> D[Update or compare value]
-    C -- No --> E[Insert key with state]
+    A[Create map for counts or state] --> B[Scan each element]
+    B --> C{Key seen before?}
+    C -- Yes --> D[Update or compare]
+    C -- No --> E[Insert key]
     D --> F{More elements?}
     E --> F
     F -- Yes --> B
-    F -- No --> G[Return computed answer]
+    F -- No --> G[Return computed result]
 ```
 
 ## Algorithm

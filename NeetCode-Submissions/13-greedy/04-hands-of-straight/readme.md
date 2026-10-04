@@ -19,24 +19,28 @@ Choose the locally best valid action first while preserving correctness for the 
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
-2. `The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.`
+1. `A hash map stores counts, indices, or state information keyed by the processed value.`
+2. `As the scan continues, the map reveals whether a value has already appeared or if a state must be updated.`
+3. `The current element is compared against the map to decide whether the operation should continue or terminate.`
+4. `The final result is computed from the map state after the full pass is complete.`
 
 ## Code Walkthrough
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
-- The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.
+- A hash map stores counts, indices, or state information keyed by the processed value.
+- As the scan continues, the map reveals whether a value has already appeared or if a state must be updated.
+- The current element is compared against the map to decide whether the operation should continue or terminate.
+- The final result is computed from the map state after the full pass is complete.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Create map for counts or index state] --> B[Scan each element]
-    B --> C{Is key already tracked?}
-    C -- Yes --> D[Update or compare value]
-    C -- No --> E[Insert key with state]
+    A[Create map for counts or state] --> B[Scan each element]
+    B --> C{Key seen before?}
+    C -- Yes --> D[Update or compare]
+    C -- No --> E[Insert key]
     D --> F{More elements?}
     E --> F
     F -- Yes --> B
-    F -- No --> G[Return computed answer]
+    F -- No --> G[Return computed result]
 ```
 
 ## Algorithm

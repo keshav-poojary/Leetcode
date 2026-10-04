@@ -19,24 +19,28 @@ Use array scanning and counting patterns, keeping track of state while minimizin
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.`
-2. `Sorting normalizes the structure of the input so adjacent values or intervals can be compared in a predictable order.`
+1. `The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.`
+2. `The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.`
+3. `When the scan reaches the end, the maintained state already contains the correct final result.`
+4. `The result is returned in the required order and format.`
 
 ## Code Walkthrough
-- The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.
-- Sorting normalizes the structure of the input so adjacent values or intervals can be compared in a predictable order.
+- The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.
+- The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.
+- When the scan reaches the end, the maintained state already contains the correct final result.
+- The result is returned in the required order and format.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Sort the input] --> B[Scan adjacent values or ranges]
-    B --> C{Current state satisfies rule?}
+    A[Sort values or intervals] --> B[Scan current item]
+    B --> C{Condition holds?}
     C -- Yes --> D[Update answer]
-    C -- No --> E[Skip or move pointer]
-    D --> B
-    E --> B
-    B --> F{End reached?}
-    F -- Yes --> G[Return sorted result]
+    C -- No --> E[Move ahead]
+    D --> F{Reached end?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Return final answer]
 ```
 
 ## Algorithm

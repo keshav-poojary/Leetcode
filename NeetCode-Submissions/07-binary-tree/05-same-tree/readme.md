@@ -19,10 +19,16 @@ Traverse the tree with DFS or BFS, carrying information through recursive or ite
 4. Merge child results back to the parent to form the final answer.
 
 ## Code Trace
-1. `The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.`
+1. `The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.`
+2. `The main loop checks the current item or node against the required condition before updating the answer.`
+3. `Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.`
+4. `After the scan completes, the collected state is returned as the final answer.`
 
 ## Code Walkthrough
-- The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.
+- The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.
+- The main loop checks the current item or node against the required condition before updating the answer.
+- Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.
+- After the scan completes, the collected state is returned as the final answer.
 
 ## Mermaid Diagram
 ```mermaid

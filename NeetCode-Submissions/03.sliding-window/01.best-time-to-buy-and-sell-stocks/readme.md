@@ -19,28 +19,28 @@ Maintain a dynamic window and update counts as the window expands or shrinks to 
 4. Track the answer as the window updates to keep the logic linear.
 
 ## Code Trace
-1. `The right pointer expands the current window while the constraints remain satisfied.`
-2. `The left pointer shrinks the window only when the current state violates the condition, restoring a valid window.`
-3. `The answer is updated each time a better window is found.`
-4. `The loop finishes with the best valid window recorded in the answer.`
+1. `The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.`
+2. `The main loop checks the current item or node against the required condition before updating the answer.`
+3. `Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.`
+4. `After the scan completes, the collected state is returned as the final answer.`
 
 ## Code Walkthrough
-- The right pointer expands the current window while the constraints remain satisfied.
-- The left pointer shrinks the window only when the current state violates the condition, restoring a valid window.
-- The answer is updated each time a better window is found.
-- The loop finishes with the best valid window recorded in the answer.
+- The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.
+- The main loop checks the current item or node against the required condition before updating the answer.
+- Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.
+- After the scan completes, the collected state is returned as the final answer.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
     A[Initialize state] --> B[Loop over input]
-    B --> C{Check condition on current item}
+    B --> C{Check current condition}
     C -- True --> D[Update answer or state]
     C -- False --> E[Skip or continue]
     D --> F{End loop?}
     E --> F
     F -- No --> B
-    F -- Yes --> G[Return result]
+    F -- Yes --> G[Return final answer]
 ```
 
 ## Algorithm

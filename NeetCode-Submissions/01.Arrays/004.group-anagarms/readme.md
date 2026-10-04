@@ -19,26 +19,28 @@ Use array scanning and counting patterns, keeping track of state while minimizin
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.`
-2. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
-3. `Sorting normalizes the structure of the input so adjacent values or intervals can be compared in a predictable order.`
+1. `The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.`
+2. `The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.`
+3. `When the scan reaches the end, the maintained state already contains the correct final result.`
+4. `The result is returned in the required order and format.`
 
 ## Code Walkthrough
-- If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
-- Sorting normalizes the structure of the input so adjacent values or intervals can be compared in a predictable order.
+- The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.
+- The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.
+- When the scan reaches the end, the maintained state already contains the correct final result.
+- The result is returned in the required order and format.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Sort intervals or values] --> B[Track current merged range]
-    B --> C{Current overlaps next?}
-    C -- Yes --> D[Merge range]
-    C -- No --> E[Append result]
-    D --> B
-    E --> B
-    B --> F{Reached end?}
-    F -- Yes --> G[Return final merged output]
+    A[Sort values or intervals] --> B[Scan current item]
+    B --> C{Condition holds?}
+    C -- Yes --> D[Update answer]
+    C -- No --> E[Move ahead]
+    D --> F{Reached end?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Return final answer]
 ```
 
 ## Algorithm

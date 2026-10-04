@@ -19,28 +19,28 @@ Reduce the search space by checking the sorted property and moving the boundary 
 4. Return the boundary value once the search condition is fully satisfied.
 
 ## Code Trace
-1. `The search space is defined by the left and right pointer boundaries instead of iterating through every element.`
-2. `The midpoint is evaluated against the sorted invariant to decide whether the answer lives on the left or right side.`
-3. `Pointers move toward each other until the valid range collapses to a single answer.`
-4. `The final pointer position is returned as the correct result.`
+1. `The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.`
+2. `The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.`
+3. `When the scan reaches the end, the maintained state already contains the correct final result.`
+4. `The result is returned in the required order and format.`
 
 ## Code Walkthrough
-- The search space is defined by the left and right pointer boundaries instead of iterating through every element.
-- The midpoint is evaluated against the sorted invariant to decide whether the answer lives on the left or right side.
-- Pointers move toward each other until the valid range collapses to a single answer.
-- The final pointer position is returned as the correct result.
+- The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.
+- The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.
+- When the scan reaches the end, the maintained state already contains the correct final result.
+- The result is returned in the required order and format.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Sort intervals or values] --> B[Track current merged range]
-    B --> C{Current overlaps next?}
-    C -- Yes --> D[Merge range]
-    C -- No --> E[Append result]
-    D --> B
-    E --> B
-    B --> F{Reached end?}
-    F -- Yes --> G[Return final merged output]
+    A[Sort values or intervals] --> B[Scan current item]
+    B --> C{Condition holds?}
+    C -- Yes --> D[Update answer]
+    C -- No --> E[Move ahead]
+    D --> F{Reached end?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Return final answer]
 ```
 
 ## Algorithm

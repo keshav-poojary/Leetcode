@@ -19,28 +19,29 @@ Explore candidate choices recursively and backtrack once a branch is invalid or 
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `The current value is checked against the previously seen values before any new state is recorded.`
-2. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
-3. `The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.`
-4. `Visited state is marked as soon as a value or node is processed so repeated work is avoided during the traversal.`
+1. `Each node starts as its own parent or root in the disjoint-set structure.`
+2. `For every edge, the code merges the two endpoints into the same connected component with union/find.`
+3. `The root representative for each node determines whether two vertices are connected.`
+4. `The final answer is the count of distinct roots left after all unions are processed.`
 
 ## Code Walkthrough
-- The current value is checked against the previously seen values before any new state is recorded.
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
-- The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.
-- Visited state is marked as soon as a value or node is processed so repeated work is avoided during the traversal.
+- Each node starts as its own parent or root in the disjoint-set structure.
+- For every edge, the code merges the two endpoints into the same connected component with union/find.
+- The root representative for each node determines whether two vertices are connected.
+- The final answer is the count of distinct roots left after all unions are processed.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Initialize state] --> B[Loop over input]
-    B --> C{Check condition on current item}
-    C -- True --> D[Update answer or state]
-    C -- False --> E[Skip or continue]
-    D --> F{End loop?}
+    A[Initialize parent/root for each node] --> B[For each edge, call union]
+    B --> C{Same root?}
+    C -- No --> D[Merge components]
+    C -- Yes --> E[Skip duplicate connection]
+    D --> F{All edges processed?}
     E --> F
     F -- No --> B
-    F -- Yes --> G[Return result]
+    F -- Yes --> G[Count number of distinct roots]
+    G --> H[Return connected component count]
 ```
 
 ## Algorithm

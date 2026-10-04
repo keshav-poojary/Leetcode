@@ -19,21 +19,21 @@ Maintain a dynamic window and update counts as the window expands or shrinks to 
 4. Track the answer as the window updates to keep the logic linear.
 
 ## Code Trace
-1. `The right pointer expands the current window while the constraints remain satisfied.`
-2. `The left pointer shrinks the window only when the current state violates the condition, restoring a valid window.`
-3. `The answer is updated each time a better window is found.`
-4. `The loop finishes with the best valid window recorded in the answer.`
+1. `The stack or deque preserves the pending order of operations while the algorithm processes the input.`
+2. `Values are pushed when their state is discovered, and popped when their condition becomes active.`
+3. `This structure helps maintain ordering and allows delayed decisions while traversal continues.`
+4. `Once the stack is fully processed, the final answer is returned from the accumulated state.`
 
 ## Code Walkthrough
-- The right pointer expands the current window while the constraints remain satisfied.
-- The left pointer shrinks the window only when the current state violates the condition, restoring a valid window.
-- The answer is updated each time a better window is found.
-- The loop finishes with the best valid window recorded in the answer.
+- The stack or deque preserves the pending order of operations while the algorithm processes the input.
+- Values are pushed when their state is discovered, and popped when their condition becomes active.
+- This structure helps maintain ordering and allows delayed decisions while traversal continues.
+- Once the stack is fully processed, the final answer is returned from the accumulated state.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Read next value] --> B{Condition requires push or pop?}
+    A[Read next value] --> B{Need to push or pop?}
     B -- Push --> C[Push to stack]
     B -- Pop --> D[Pop while condition holds]
     C --> E[Continue scanning]

@@ -19,24 +19,28 @@ Use array scanning and counting patterns, keeping track of state while minimizin
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.`
-2. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
+1. `The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.`
+2. `The main loop checks the current item or node against the required condition before updating the answer.`
+3. `Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.`
+4. `After the scan completes, the collected state is returned as the final answer.`
 
 ## Code Walkthrough
-- If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
+- The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.
+- The main loop checks the current item or node against the required condition before updating the answer.
+- Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.
+- After the scan completes, the collected state is returned as the final answer.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
     A[Initialize state] --> B[Loop over input]
-    B --> C{Check condition on current item}
+    B --> C{Check current condition}
     C -- True --> D[Update answer or state]
     C -- False --> E[Skip or continue]
     D --> F{End loop?}
     E --> F
     F -- No --> B
-    F -- Yes --> G[Return result]
+    F -- Yes --> G[Return final answer]
 ```
 
 ## Algorithm

@@ -19,27 +19,29 @@ Reduce the search space by checking the sorted property and moving the boundary 
 4. Return the boundary value once the search condition is fully satisfied.
 
 ## Code Trace
-1. `The search space is defined by the left and right pointer boundaries instead of iterating through every element.`
-2. `The midpoint is evaluated against the sorted invariant to decide whether the answer lives on the left or right side.`
-3. `Pointers move toward each other until the valid range collapses to a single answer.`
-4. `The final pointer position is returned as the correct result.`
+1. `Each node starts as its own parent or root in the disjoint-set structure.`
+2. `For every edge, the code merges the two endpoints into the same connected component with union/find.`
+3. `The root representative for each node determines whether two vertices are connected.`
+4. `The final answer is the count of distinct roots left after all unions are processed.`
 
 ## Code Walkthrough
-- The search space is defined by the left and right pointer boundaries instead of iterating through every element.
-- The midpoint is evaluated against the sorted invariant to decide whether the answer lives on the left or right side.
-- Pointers move toward each other until the valid range collapses to a single answer.
-- The final pointer position is returned as the correct result.
+- Each node starts as its own parent or root in the disjoint-set structure.
+- For every edge, the code merges the two endpoints into the same connected component with union/find.
+- The root representative for each node determines whether two vertices are connected.
+- The final answer is the count of distinct roots left after all unions are processed.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Set low and high bounds] --> B[mid = (low + high) / 2]
-    B --> C{Condition at mid is valid?}
-    C -- Yes --> D[Move high = mid]
-    C -- No --> E[Move low = mid + 1]
-    D --> B
-    E --> B
-    B --> F[Return final boundary value]
+    A[Initialize parent/root for each node] --> B[For each edge, call union]
+    B --> C{Same root?}
+    C -- No --> D[Merge components]
+    C -- Yes --> E[Skip duplicate connection]
+    D --> F{All edges processed?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Count number of distinct roots]
+    G --> H[Return connected component count]
 ```
 
 ## Algorithm

@@ -19,28 +19,28 @@ Sort or merge intervals to keep overlapping ranges compact and easy to reason ab
 4. Return the final merged structure in the required output format.
 
 ## Code Trace
-1. `The intervals are sorted so the merge logic always compares the current interval against the next valid range.`
-2. `A running merged interval is updated whenever the current interval overlaps the active boundary.`
-3. `Non-overlapping intervals are appended to preserve the final sorted output order.`
-4. `The final merged vector is returned as the result.`
+1. `The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.`
+2. `The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.`
+3. `When the scan reaches the end, the maintained state already contains the correct final result.`
+4. `The result is returned in the required order and format.`
 
 ## Code Walkthrough
-- The intervals are sorted so the merge logic always compares the current interval against the next valid range.
-- A running merged interval is updated whenever the current interval overlaps the active boundary.
-- Non-overlapping intervals are appended to preserve the final sorted output order.
-- The final merged vector is returned as the result.
+- The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.
+- The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.
+- When the scan reaches the end, the maintained state already contains the correct final result.
+- The result is returned in the required order and format.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Sort intervals or values] --> B[Track current merged range]
-    B --> C{Current overlaps next?}
-    C -- Yes --> D[Merge range]
-    C -- No --> E[Append result]
-    D --> B
-    E --> B
-    B --> F{Reached end?}
-    F -- Yes --> G[Return final merged output]
+    A[Sort values or intervals] --> B[Scan current item]
+    B --> C{Condition holds?}
+    C -- Yes --> D[Update answer]
+    C -- No --> E[Move ahead]
+    D --> F{Reached end?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Return final answer]
 ```
 
 ## Algorithm

@@ -19,24 +19,29 @@ Track pointers carefully and manipulate next relationships while handling edge c
 4. Verify the final linked list order before returning the result.
 
 ## Code Trace
-1. `The current value is checked against the previously seen values before any new state is recorded.`
-2. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
+1. `Each node starts as its own parent or root in the disjoint-set structure.`
+2. `For every edge, the code merges the two endpoints into the same connected component with union/find.`
+3. `The root representative for each node determines whether two vertices are connected.`
+4. `The final answer is the count of distinct roots left after all unions are processed.`
 
 ## Code Walkthrough
-- The current value is checked against the previously seen values before any new state is recorded.
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
+- Each node starts as its own parent or root in the disjoint-set structure.
+- For every edge, the code merges the two endpoints into the same connected component with union/find.
+- The root representative for each node determines whether two vertices are connected.
+- The final answer is the count of distinct roots left after all unions are processed.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Create map for counts or index state] --> B[Scan each element]
-    B --> C{Is key already tracked?}
-    C -- Yes --> D[Update or compare value]
-    C -- No --> E[Insert key with state]
-    D --> F{More elements?}
+    A[Initialize parent/root for each node] --> B[For each edge, call union]
+    B --> C{Same root?}
+    C -- No --> D[Merge components]
+    C -- Yes --> E[Skip duplicate connection]
+    D --> F{All edges processed?}
     E --> F
-    F -- Yes --> B
-    F -- No --> G[Return computed answer]
+    F -- No --> B
+    F -- Yes --> G[Count number of distinct roots]
+    G --> H[Return connected component count]
 ```
 
 ## Algorithm

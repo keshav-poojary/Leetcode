@@ -19,19 +19,29 @@ Explore candidate choices recursively and backtrack once a branch is invalid or 
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.`
+1. `Each node starts as its own parent or root in the disjoint-set structure.`
+2. `For every edge, the code merges the two endpoints into the same connected component with union/find.`
+3. `The root representative for each node determines whether two vertices are connected.`
+4. `The final answer is the count of distinct roots left after all unions are processed.`
 
 ## Code Walkthrough
-- If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.
+- Each node starts as its own parent or root in the disjoint-set structure.
+- For every edge, the code merges the two endpoints into the same connected component with union/find.
+- The root representative for each node determines whether two vertices are connected.
+- The final answer is the count of distinct roots left after all unions are processed.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Read input] --> B[Transform to working state] --> C[Apply logic on current item] --> D{Condition holds?}
-    D -- Yes --> E[Update answer] --> F{Done?}
-    D -- No --> F
-    F -- No --> C
-    F -- Yes --> G[Return final result]
+    A[Initialize parent/root for each node] --> B[For each edge, call union]
+    B --> C{Same root?}
+    C -- No --> D[Merge components]
+    C -- Yes --> E[Skip duplicate connection]
+    D --> F{All edges processed?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Count number of distinct roots]
+    G --> H[Return connected component count]
 ```
 
 ## Algorithm

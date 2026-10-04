@@ -19,26 +19,29 @@ Use priority queues to always access the smallest or largest important value at 
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
-2. `The traversal helper expands outward from the current node and only continues through valid neighbors that satisfy the movement rule.`
+1. `A queue is initialized with the start node or source state to begin traversal.`
+2. `The algorithm pops the front node, visits it, and explores every neighbor that has not been seen before.`
+3. `Each newly reached node is marked visited and pushed into the queue for future processing.`
+4. `The loop continues until the queue is empty, after which the result is determined from the visited set or component count.`
 
 ## Code Walkthrough
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
-- The traversal helper expands outward from the current node and only continues through valid neighbors that satisfy the movement rule.
+- A queue is initialized with the start node or source state to begin traversal.
+- The algorithm pops the front node, visits it, and explores every neighbor that has not been seen before.
+- Each newly reached node is marked visited and pushed into the queue for future processing.
+- The loop continues until the queue is empty, after which the result is determined from the visited set or component count.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Initialize boundary visited arrays] --> B[Choose start cells]
-    B --> C[DFS or BFS on valid neighbors]
-    C --> D{Neighbor is in bounds and can flow?}
-    D -- Yes --> E[Mark visited and continue]
-    D -- No --> F[Skip this neighbor]
-    E --> G{More neighbors?}
+    A[Initialize queue with start node] --> B[Pop front node]
+    B --> C[Visit neighbors]
+    C --> D{Neighbor unvisited?}
+    D -- Yes --> E[Mark visited and push]
+    D -- No --> F[Ignore neighbor]
+    E --> G{Queue not empty?}
     F --> G
-    G -- Yes --> C
-    G -- No --> H[Check overlap of both ocean sets]
-    H --> I[Return valid cells]
+    G -- Yes --> B
+    G -- No --> H[Return traversal result]
 ```
 
 ## Algorithm

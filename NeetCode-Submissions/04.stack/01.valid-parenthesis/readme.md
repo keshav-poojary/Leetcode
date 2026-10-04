@@ -19,26 +19,29 @@ Use stack-based state tracking to handle order-sensitive operations and nested s
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
-2. `The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.`
-3. `The stack or deque preserves the order of pending work so the algorithm can revisit states in the correct sequence.`
+1. `Each node starts as its own parent or root in the disjoint-set structure.`
+2. `For every edge, the code merges the two endpoints into the same connected component with union/find.`
+3. `The root representative for each node determines whether two vertices are connected.`
+4. `The final answer is the count of distinct roots left after all unions are processed.`
 
 ## Code Walkthrough
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
-- The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.
-- The stack or deque preserves the order of pending work so the algorithm can revisit states in the correct sequence.
+- Each node starts as its own parent or root in the disjoint-set structure.
+- For every edge, the code merges the two endpoints into the same connected component with union/find.
+- The root representative for each node determines whether two vertices are connected.
+- The final answer is the count of distinct roots left after all unions are processed.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Read next value] --> B{Condition requires push or pop?}
-    B -- Push --> C[Push to stack]
-    B -- Pop --> D[Pop while condition holds]
-    C --> E[Continue scanning]
-    D --> E
-    E --> F{End reached?}
-    F -- No --> A
-    F -- Yes --> G[Return stack-driven result]
+    A[Initialize parent/root for each node] --> B[For each edge, call union]
+    B --> C{Same root?}
+    C -- No --> D[Merge components]
+    C -- Yes --> E[Skip duplicate connection]
+    D --> F{All edges processed?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Count number of distinct roots]
+    G --> H[Return connected component count]
 ```
 
 ## Algorithm

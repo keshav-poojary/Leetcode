@@ -19,24 +19,28 @@ Traverse the tree with DFS or BFS, carrying information through recursive or ite
 4. Merge child results back to the parent to form the final answer.
 
 ## Code Trace
-1. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
-2. `The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.`
+1. `The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.`
+2. `The main loop checks the current item or node against the required condition before updating the answer.`
+3. `Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.`
+4. `After the scan completes, the collected state is returned as the final answer.`
 
 ## Code Walkthrough
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
-- The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.
+- The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.
+- The main loop checks the current item or node against the required condition before updating the answer.
+- Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.
+- After the scan completes, the collected state is returned as the final answer.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
     A[Initialize state] --> B[Loop over input]
-    B --> C{Check condition on current item}
+    B --> C{Check current condition}
     C -- True --> D[Update answer or state]
     C -- False --> E[Skip or continue]
     D --> F{End loop?}
     E --> F
     F -- No --> B
-    F -- Yes --> G[Return result]
+    F -- Yes --> G[Return final answer]
 ```
 
 ## Algorithm

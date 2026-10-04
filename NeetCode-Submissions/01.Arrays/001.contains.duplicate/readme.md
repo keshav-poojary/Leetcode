@@ -19,18 +19,16 @@ Use array scanning and counting patterns, keeping track of state while minimizin
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `A set is created to remember values already seen, which gives us constant-time membership checks for duplicates.`
-2. `The current value is checked against the previously seen values before any new state is recorded.`
-3. `If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.`
-4. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
-5. `The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.`
+1. `A set is created to remember every value already seen while scanning the input.`
+2. `On each iteration, the current element is checked against the set before it is inserted.`
+3. `If the value already exists, the function returns immediately because the duplicate condition is satisfied.`
+4. `If the scan reaches the end without a duplicate, the function returns false.`
 
 ## Code Walkthrough
-- A set is created to remember values already seen, which gives us constant-time membership checks for duplicates.
-- The current value is checked against the previously seen values before any new state is recorded.
-- If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
-- The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.
+- A set is created to remember every value already seen while scanning the input.
+- On each iteration, the current element is checked against the set before it is inserted.
+- If the value already exists, the function returns immediately because the duplicate condition is satisfied.
+- If the scan reaches the end without a duplicate, the function returns false.
 
 ## Mermaid Diagram
 ```mermaid

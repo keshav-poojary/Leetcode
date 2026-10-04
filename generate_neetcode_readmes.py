@@ -160,62 +160,69 @@ def extract_code_walkthrough(folder: Path, category_name: str) -> list[str]:
 
     code = solution_files[0].read_text(encoding="utf-8", errors="ignore")
     low = code.lower()
-    steps: list[str] = []
 
-    if "set<" in code or "unordered_set" in code or "set " in code:
-        steps.append("A set is created to remember values already seen, which gives us constant-time membership checks for duplicates.")
-    if "find(" in code or ".count(" in code or "contains(" in code:
-        steps.append("The current value is checked against the previously seen values before any new state is recorded.")
-    if "insert(" in code or "push_back(" in code or "append(" in code:
-        steps.append("If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.")
-    if "for (" in code or "for " in code or "while " in code:
-        steps.append("The main loop walks through the input one element at a time and applies the decision logic to every position.")
-    if "return true" in code.lower() or "return false" in code.lower():
-        steps.append("The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.")
-    if "visited" in code.lower() or "seen" in code.lower():
-        steps.append("Visited state is marked as soon as a value or node is processed so repeated work is avoided during the traversal.")
-    if "dfs" in low or "bfs" in low or "queue" in low:
-        steps.append("The traversal helper expands outward from the current node and only continues through valid neighbors that satisfy the movement rule.")
+    if "set<" in code or "unordered_set" in code or "set " in low:
+        return [
+            "A set is created to remember every value already seen while scanning the input.",
+            "On each iteration, the current element is checked against the set before it is inserted.",
+            "If the value already exists, the function returns immediately because the duplicate condition is satisfied.",
+            "If the scan reaches the end without a duplicate, the function returns false."
+        ]
+
+    if "union" in low or "parent" in low or "find(" in low:
+        return [
+            "Each node starts as its own parent or root in the disjoint-set structure.",
+            "For every edge, the code merges the two endpoints into the same connected component with union/find.",
+            "The root representative for each node determines whether two vertices are connected.",
+            "The final answer is the count of distinct roots left after all unions are processed."
+        ]
+
+    if "dfs" in low:
+        return [
+            "The traversal starts from the relevant source or boundary node and marks it as visited.",
+            "Each recursive or iterative DFS step explores all valid neighbors before continuing deeper into the graph.",
+            "A visited array prevents cycles and repeated traversal of nodes already processed.",
+            "When all reachable nodes are explored, the solution checks whether the final condition is satisfied and returns the result."
+        ]
+
+    if "bfs" in low or "queue" in low:
+        return [
+            "A queue is initialized with the start node or source state to begin traversal.",
+            "The algorithm pops the front node, visits it, and explores every neighbor that has not been seen before.",
+            "Each newly reached node is marked visited and pushed into the queue for future processing.",
+            "The loop continues until the queue is empty, after which the result is determined from the visited set or component count."
+        ]
+
     if "sort(" in low:
-        steps.append("Sorting normalizes the structure of the input so adjacent values or intervals can be compared in a predictable order.")
+        return [
+            "The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.",
+            "The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.",
+            "When the scan reaches the end, the maintained state already contains the correct final result.",
+            "The result is returned in the required order and format."
+        ]
+
     if "stack" in low or "deque" in low:
-        steps.append("The stack or deque preserves the order of pending work so the algorithm can revisit states in the correct sequence.")
-
-    if category_name == "14-graph":
-        steps = [
-            "The ocean reachability matrices are initialized for the Pacific and Atlantic boundaries before the DFS begins.",
-            "Each DFS call expands only to neighbors whose height is greater than or equal to the current cell, which matches the flow rule from the problem statement.",
-            "A visited marker is set for each reached cell so the flood-fill does not revisit the same position unnecessarily.",
-            "The final output is built from the intersection of cells that can reach both oceans.",
-        ]
-    elif category_name == "05.binary-search":
-        steps = [
-            "The search space is defined by the left and right pointer boundaries instead of iterating through every element.",
-            "The midpoint is evaluated against the sorted invariant to decide whether the answer lives on the left or right side.",
-            "Pointers move toward each other until the valid range collapses to a single answer.",
-            "The final pointer position is returned as the correct result.",
-        ]
-    elif category_name == "12-intervals":
-        steps = [
-            "The intervals are sorted so the merge logic always compares the current interval against the next valid range.",
-            "A running merged interval is updated whenever the current interval overlaps the active boundary.",
-            "Non-overlapping intervals are appended to preserve the final sorted output order.",
-            "The final merged vector is returned as the result.",
-        ]
-    elif category_name == "03.sliding-window":
-        steps = [
-            "The right pointer expands the current window while the constraints remain satisfied.",
-            "The left pointer shrinks the window only when the current state violates the condition, restoring a valid window.",
-            "The answer is updated each time a better window is found.",
-            "The loop finishes with the best valid window recorded in the answer.",
+        return [
+            "The stack or deque preserves the pending order of operations while the algorithm processes the input.",
+            "Values are pushed when their state is discovered, and popped when their condition becomes active.",
+            "This structure helps maintain ordering and allows delayed decisions while traversal continues.",
+            "Once the stack is fully processed, the final answer is returned from the accumulated state."
         ]
 
-    if not steps:
-        steps = [
-            "The implementation reads the data, transforms it into a compact state, and then mutates that state in a way that matches the problem constraints.",
-            "Each condition in the code ensures the next action is valid before the solution continues toward the final output.",
+    if "map" in low or "unordered_map" in low:
+        return [
+            "A hash map stores counts, indices, or state information keyed by the processed value.",
+            "As the scan continues, the map reveals whether a value has already appeared or if a state must be updated.",
+            "The current element is compared against the map to decide whether the operation should continue or terminate.",
+            "The final result is computed from the map state after the full pass is complete."
         ]
-    return steps
+
+    return [
+        "The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.",
+        "The main loop checks the current item or node against the required condition before updating the answer.",
+        "Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.",
+        "After the scan completes, the collected state is returned as the final answer."
+    ]
 
 
 def build_mermaid_diagram(folder: Path, category_name: str) -> str:
@@ -229,32 +236,29 @@ def build_mermaid_diagram(folder: Path, category_name: str) -> str:
     code = solution_files[0].read_text(encoding="utf-8", errors="ignore")
     low = code.lower()
 
-    if "set<" in code or "unordered_set" in code or "set " in code.lower():
+    if "set<" in code or "unordered_set" in code or "set " in low:
         return "flowchart TD\n    A[Create empty set] --> B[i = 0]\n    B --> C{ i < nums.size? }\n    C -- Yes --> D{ nums[i] in set? }\n    D -- Yes --> E[Return true]\n    D -- No --> F[Insert nums[i] into set]\n    F --> G[i = i + 1]\n    G --> C\n    C -- No --> H[Return false]"
 
-    if "dfs" in low or "bfs" in low or "queue" in low:
-        return "flowchart TD\n    A[Initialize boundary visited arrays] --> B[Choose start cells]\n    B --> C[DFS or BFS on valid neighbors]\n    C --> D{Neighbor is in bounds and can flow?}\n    D -- Yes --> E[Mark visited and continue]\n    D -- No --> F[Skip this neighbor]\n    E --> G{More neighbors?}\n    F --> G\n    G -- Yes --> C\n    G -- No --> H[Check overlap of both ocean sets]\n    H --> I[Return valid cells]"
+    if "union" in low or "parent" in low or "find(" in low:
+        return "flowchart TD\n    A[Initialize parent/root for each node] --> B[For each edge, call union]\n    B --> C{Same root?}\n    C -- No --> D[Merge components]\n    C -- Yes --> E[Skip duplicate connection]\n    D --> F{All edges processed?}\n    E --> F\n    F -- No --> B\n    F -- Yes --> G[Count number of distinct roots]\n    G --> H[Return connected component count]"
 
-    if "sort(" in low and ("merge" in low or "vector" in low.lower()):
-        return "flowchart TD\n    A[Sort intervals or values] --> B[Track current merged range]\n    B --> C{Current overlaps next?}\n    C -- Yes --> D[Merge range]\n    C -- No --> E[Append result]\n    D --> B\n    E --> B\n    B --> F{Reached end?}\n    F -- Yes --> G[Return final merged output]"
+    if "dfs" in low:
+        return "flowchart TD\n    A[Start from source node] --> B[Mark node visited]\n    B --> C[Iterate over neighbors]\n    C --> D{Neighbor visited?}\n    D -- No --> E[Visit neighbor]\n    D -- Yes --> F[Skip neighbor]\n    E --> G{More neighbors?}\n    F --> G\n    G -- Yes --> C\n    G -- No --> H[Check final condition]\n    H --> I[Return result]"
 
-    if "low" in low and "high" in low and "mid" in low:
-        return "flowchart TD\n    A[Set low and high bounds] --> B[mid = (low + high) / 2]\n    B --> C{Condition at mid is valid?}\n    C -- Yes --> D[Move high = mid]\n    C -- No --> E[Move low = mid + 1]\n    D --> B\n    E --> B\n    B --> F[Return final boundary value]"
-
-    if "stack" in low or "deque" in low:
-        return "flowchart TD\n    A[Read next value] --> B{Condition requires push or pop?}\n    B -- Push --> C[Push to stack]\n    B -- Pop --> D[Pop while condition holds]\n    C --> E[Continue scanning]\n    D --> E\n    E --> F{End reached?}\n    F -- No --> A\n    F -- Yes --> G[Return stack-driven result]"
-
-    if "queue" in low:
-        return "flowchart TD\n    A[Initialize queue with start state] --> B[Pop front item]\n    B --> C[Explore neighbors]\n    C --> D{Neighbor is valid?}\n    D -- Yes --> E[Push neighbor]\n    D -- No --> F[Skip neighbor]\n    E --> G{Queue not empty?}\n    F --> G\n    G -- Yes --> B\n    G -- No --> H[Return processed result]"
+    if "bfs" in low or "queue" in low:
+        return "flowchart TD\n    A[Initialize queue with start node] --> B[Pop front node]\n    B --> C[Visit neighbors]\n    C --> D{Neighbor unvisited?}\n    D -- Yes --> E[Mark visited and push]\n    D -- No --> F[Ignore neighbor]\n    E --> G{Queue not empty?}\n    F --> G\n    G -- Yes --> B\n    G -- No --> H[Return traversal result]"
 
     if "sort(" in low:
-        return "flowchart TD\n    A[Sort the input] --> B[Scan adjacent values or ranges]\n    B --> C{Current state satisfies rule?}\n    C -- Yes --> D[Update answer]\n    C -- No --> E[Skip or move pointer]\n    D --> B\n    E --> B\n    B --> F{End reached?}\n    F -- Yes --> G[Return sorted result]"
+        return "flowchart TD\n    A[Sort values or intervals] --> B[Scan current item]\n    B --> C{Condition holds?}\n    C -- Yes --> D[Update answer]\n    C -- No --> E[Move ahead]\n    D --> F{Reached end?}\n    E --> F\n    F -- No --> B\n    F -- Yes --> G[Return final answer]"
+
+    if "stack" in low or "deque" in low:
+        return "flowchart TD\n    A[Read next value] --> B{Need to push or pop?}\n    B -- Push --> C[Push to stack]\n    B -- Pop --> D[Pop while condition holds]\n    C --> E[Continue scanning]\n    D --> E\n    E --> F{End reached?}\n    F -- No --> A\n    F -- Yes --> G[Return stack-driven result]"
 
     if "map" in low or "unordered_map" in low:
-        return "flowchart TD\n    A[Create map for counts or index state] --> B[Scan each element]\n    B --> C{Is key already tracked?}\n    C -- Yes --> D[Update or compare value]\n    C -- No --> E[Insert key with state]\n    D --> F{More elements?}\n    E --> F\n    F -- Yes --> B\n    F -- No --> G[Return computed answer]"
+        return "flowchart TD\n    A[Create map for counts or state] --> B[Scan each element]\n    B --> C{Key seen before?}\n    C -- Yes --> D[Update or compare]\n    C -- No --> E[Insert key]\n    D --> F{More elements?}\n    E --> F\n    F -- Yes --> B\n    F -- No --> G[Return computed result]"
 
     if "while" in low or "for" in low:
-        return "flowchart TD\n    A[Initialize state] --> B[Loop over input]\n    B --> C{Check condition on current item}\n    C -- True --> D[Update answer or state]\n    C -- False --> E[Skip or continue]\n    D --> F{End loop?}\n    E --> F\n    F -- No --> B\n    F -- Yes --> G[Return result]"
+        return "flowchart TD\n    A[Initialize state] --> B[Loop over input]\n    B --> C{Check current condition}\n    C -- True --> D[Update answer or state]\n    C -- False --> E[Skip or continue]\n    D --> F{End loop?}\n    E --> F\n    F -- No --> B\n    F -- Yes --> G[Return final answer]"
 
     return "flowchart TD\n    A[Read input] --> B[Transform to working state] --> C[Apply logic on current item] --> D{Condition holds?}\n    D -- Yes --> E[Update answer] --> F{Done?}\n    D -- No --> F\n    F -- No --> C\n    F -- Yes --> G[Return final result]"
 

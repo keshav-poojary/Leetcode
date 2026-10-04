@@ -19,28 +19,28 @@ Sort or merge intervals to keep overlapping ranges compact and easy to reason ab
 4. Return the final merged structure in the required output format.
 
 ## Code Trace
-1. `The intervals are sorted so the merge logic always compares the current interval against the next valid range.`
-2. `A running merged interval is updated whenever the current interval overlaps the active boundary.`
-3. `Non-overlapping intervals are appended to preserve the final sorted output order.`
-4. `The final merged vector is returned as the result.`
+1. `The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.`
+2. `The main loop checks the current item or node against the required condition before updating the answer.`
+3. `Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.`
+4. `After the scan completes, the collected state is returned as the final answer.`
 
 ## Code Walkthrough
-- The intervals are sorted so the merge logic always compares the current interval against the next valid range.
-- A running merged interval is updated whenever the current interval overlaps the active boundary.
-- Non-overlapping intervals are appended to preserve the final sorted output order.
-- The final merged vector is returned as the result.
+- The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.
+- The main loop checks the current item or node against the required condition before updating the answer.
+- Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.
+- After the scan completes, the collected state is returned as the final answer.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
     A[Initialize state] --> B[Loop over input]
-    B --> C{Check condition on current item}
+    B --> C{Check current condition}
     C -- True --> D[Update answer or state]
     C -- False --> E[Skip or continue]
     D --> F{End loop?}
     E --> F
     F -- No --> B
-    F -- Yes --> G[Return result]
+    F -- Yes --> G[Return final answer]
 ```
 
 ## Algorithm

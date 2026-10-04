@@ -19,28 +19,28 @@ Maintain a dynamic window and update counts as the window expands or shrinks to 
 4. Track the answer as the window updates to keep the logic linear.
 
 ## Code Trace
-1. `The right pointer expands the current window while the constraints remain satisfied.`
-2. `The left pointer shrinks the window only when the current state violates the condition, restoring a valid window.`
-3. `The answer is updated each time a better window is found.`
-4. `The loop finishes with the best valid window recorded in the answer.`
+1. `The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.`
+2. `The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.`
+3. `When the scan reaches the end, the maintained state already contains the correct final result.`
+4. `The result is returned in the required order and format.`
 
 ## Code Walkthrough
-- The right pointer expands the current window while the constraints remain satisfied.
-- The left pointer shrinks the window only when the current state violates the condition, restoring a valid window.
-- The answer is updated each time a better window is found.
-- The loop finishes with the best valid window recorded in the answer.
+- The input is sorted or normalized before the main logic so comparisons are consistent and adjacent states are easy to reason about.
+- The algorithm scans the sorted values or merged intervals and updates the answer as soon as the condition is satisfied.
+- When the scan reaches the end, the maintained state already contains the correct final result.
+- The result is returned in the required order and format.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Sort the input] --> B[Scan adjacent values or ranges]
-    B --> C{Current state satisfies rule?}
+    A[Sort values or intervals] --> B[Scan current item]
+    B --> C{Condition holds?}
     C -- Yes --> D[Update answer]
-    C -- No --> E[Skip or move pointer]
-    D --> B
-    E --> B
-    B --> F{End reached?}
-    F -- Yes --> G[Return sorted result]
+    C -- No --> E[Move ahead]
+    D --> F{Reached end?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Return final answer]
 ```
 
 ## Algorithm

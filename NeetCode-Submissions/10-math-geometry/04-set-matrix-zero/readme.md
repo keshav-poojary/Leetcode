@@ -19,12 +19,16 @@ Use the core pattern that matches the input constraints and the target behavior.
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `A set is created to remember values already seen, which gives us constant-time membership checks for duplicates.`
-2. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
+1. `A set is created to remember every value already seen while scanning the input.`
+2. `On each iteration, the current element is checked against the set before it is inserted.`
+3. `If the value already exists, the function returns immediately because the duplicate condition is satisfied.`
+4. `If the scan reaches the end without a duplicate, the function returns false.`
 
 ## Code Walkthrough
-- A set is created to remember values already seen, which gives us constant-time membership checks for duplicates.
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
+- A set is created to remember every value already seen while scanning the input.
+- On each iteration, the current element is checked against the set before it is inserted.
+- If the value already exists, the function returns immediately because the duplicate condition is satisfied.
+- If the scan reaches the end without a duplicate, the function returns false.
 
 ## Mermaid Diagram
 ```mermaid

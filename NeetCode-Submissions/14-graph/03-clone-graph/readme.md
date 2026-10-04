@@ -19,30 +19,29 @@ Use graph traversal techniques such as DFS, BFS, or union-find to explore connec
 4. Check the target condition at the end of traversal and collect the valid results.
 
 ## Code Trace
-1. `The ocean reachability matrices are initialized for the Pacific and Atlantic boundaries before the DFS begins.`
-2. `Each DFS call expands only to neighbors whose height is greater than or equal to the current cell, which matches the flow rule from the problem statement.`
-3. `A visited marker is set for each reached cell so the flood-fill does not revisit the same position unnecessarily.`
-4. `The final output is built from the intersection of cells that can reach both oceans.`
+1. `Each node starts as its own parent or root in the disjoint-set structure.`
+2. `For every edge, the code merges the two endpoints into the same connected component with union/find.`
+3. `The root representative for each node determines whether two vertices are connected.`
+4. `The final answer is the count of distinct roots left after all unions are processed.`
 
 ## Code Walkthrough
-- The ocean reachability matrices are initialized for the Pacific and Atlantic boundaries before the DFS begins.
-- Each DFS call expands only to neighbors whose height is greater than or equal to the current cell, which matches the flow rule from the problem statement.
-- A visited marker is set for each reached cell so the flood-fill does not revisit the same position unnecessarily.
-- The final output is built from the intersection of cells that can reach both oceans.
+- Each node starts as its own parent or root in the disjoint-set structure.
+- For every edge, the code merges the two endpoints into the same connected component with union/find.
+- The root representative for each node determines whether two vertices are connected.
+- The final answer is the count of distinct roots left after all unions are processed.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Initialize boundary visited arrays] --> B[Choose start cells]
-    B --> C[DFS or BFS on valid neighbors]
-    C --> D{Neighbor is in bounds and can flow?}
-    D -- Yes --> E[Mark visited and continue]
-    D -- No --> F[Skip this neighbor]
-    E --> G{More neighbors?}
-    F --> G
-    G -- Yes --> C
-    G -- No --> H[Check overlap of both ocean sets]
-    H --> I[Return valid cells]
+    A[Initialize parent/root for each node] --> B[For each edge, call union]
+    B --> C{Same root?}
+    C -- No --> D[Merge components]
+    C -- Yes --> E[Skip duplicate connection]
+    D --> F{All edges processed?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Count number of distinct roots]
+    G --> H[Return connected component count]
 ```
 
 ## Algorithm

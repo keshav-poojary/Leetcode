@@ -19,19 +19,21 @@ Explore candidate choices recursively and backtrack once a branch is invalid or 
 4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
 ## Code Trace
-1. `If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.`
-2. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
-3. `The stack or deque preserves the order of pending work so the algorithm can revisit states in the correct sequence.`
+1. `The stack or deque preserves the pending order of operations while the algorithm processes the input.`
+2. `Values are pushed when their state is discovered, and popped when their condition becomes active.`
+3. `This structure helps maintain ordering and allows delayed decisions while traversal continues.`
+4. `Once the stack is fully processed, the final answer is returned from the accumulated state.`
 
 ## Code Walkthrough
-- If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.
-- The main loop walks through the input one element at a time and applies the decision logic to every position.
-- The stack or deque preserves the order of pending work so the algorithm can revisit states in the correct sequence.
+- The stack or deque preserves the pending order of operations while the algorithm processes the input.
+- Values are pushed when their state is discovered, and popped when their condition becomes active.
+- This structure helps maintain ordering and allows delayed decisions while traversal continues.
+- Once the stack is fully processed, the final answer is returned from the accumulated state.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Read next value] --> B{Condition requires push or pop?}
+    A[Read next value] --> B{Need to push or pop?}
     B -- Push --> C[Push to stack]
     B -- Pop --> D[Pop while condition holds]
     C --> E[Continue scanning]

@@ -19,28 +19,28 @@ Reduce the search space by checking the sorted property and moving the boundary 
 4. Return the boundary value once the search condition is fully satisfied.
 
 ## Code Trace
-1. `The search space is defined by the left and right pointer boundaries instead of iterating through every element.`
-2. `The midpoint is evaluated against the sorted invariant to decide whether the answer lives on the left or right side.`
-3. `Pointers move toward each other until the valid range collapses to a single answer.`
-4. `The final pointer position is returned as the correct result.`
+1. `The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.`
+2. `The main loop checks the current item or node against the required condition before updating the answer.`
+3. `Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.`
+4. `After the scan completes, the collected state is returned as the final answer.`
 
 ## Code Walkthrough
-- The search space is defined by the left and right pointer boundaries instead of iterating through every element.
-- The midpoint is evaluated against the sorted invariant to decide whether the answer lives on the left or right side.
-- Pointers move toward each other until the valid range collapses to a single answer.
-- The final pointer position is returned as the correct result.
+- The implementation reads the input and transforms it into a compact state that matches the constraints of the problem.
+- The main loop checks the current item or node against the required condition before updating the answer.
+- Each branch and guard keeps the algorithm safe for edge cases and prevents redundant work.
+- After the scan completes, the collected state is returned as the final answer.
 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
     A[Initialize state] --> B[Loop over input]
-    B --> C{Check condition on current item}
+    B --> C{Check current condition}
     C -- True --> D[Update answer or state]
     C -- False --> E[Skip or continue]
     D --> F{End loop?}
     E --> F
     F -- No --> B
-    F -- Yes --> G[Return result]
+    F -- Yes --> G[Return final answer]
 ```
 
 ## Algorithm
