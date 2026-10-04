@@ -1,53 +1,49 @@
 # Reverse Bits
 
-## Problem
-Given a 32-bit integer, reverse its bits and return the resulting integer.
+## Category
+- 11 Bit Manipulation
+
+## Problem Summary
+Reverse bits of a given 32 bits signed integer.
+
+## Files
+- solution.cpp
 
 ## Approach
+Use the core pattern that matches the input constraints and the target behavior.
 
-- Initialize a variable `res` to store the reversed number.
-- Traverse all 32 bits of the integer from the least significant bit (LSB) to the most significant bit (MSB).
-- For each bit:
-  - Check whether the current least significant bit is `1`.
-  - If it is `1`, set the corresponding bit in the reversed position.
-  - Right shift the input number to process the next bit.
-- After processing all 32 bits, return the reversed integer.
+## Solution Trace
+1. Analyze the input and identify the key invariant or constraint the solution must maintain.
+2. Transform the problem into a compact state representation that makes the decision easy to evaluate.
+3. Apply the selected algorithm and update the answer as the scan progresses.
+4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
-## Code
+## Code Trace
+1. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
 
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
+## Code Walkthrough
+- The main loop walks through the input one element at a time and applies the decision logic to every position.
 
-class Solution
-{
-public:
-    int reverseBits(int n)
-    {
-        int res = 0;
+## Algorithm
+1. Read the problem constraints and identify the correct state to track.
+2. Choose the most fitting pattern for the data structure involved.
+3. Process the collection or graph in a single pass where possible.
+4. Maintain the answer and verify correctness against edge cases.
+5. Return the final value or structure after the traversal is complete.
 
-        for (int i = 31; i >= 0; i--)
-        {
-            if (n & 1)
-            {
-                res = res + pow(2, i);
-            }
-            n = n >> 1;
-        }
+## Complexity Analysis
+- Time Complexity: O(n) or O(n log n), depending on the exact operation pattern used in the solution.
+- Space Complexity: O(n) or O(1) auxiliary space, based on the chosen data structure and recursion/stack usage.
 
-        return res;
-    }
-};
-```
+## Core Intuition
+The solution reduces the problem to a smaller, trackable state and then uses the correct structural pattern to process the input efficiently. This keeps the implementation both easy to follow and correct for the constraints.
 
-## Time Complexity
+## Edge Cases
+- Empty input or single-element input
+- Duplicate values or repeated edges
+- Boundary values and extreme indices
+- Already-sorted or reverse-sorted scenarios
+- Cycles, null nodes, or disconnected components when relevant
 
-- **O(32) = O(1)**
-
-Since an integer consists of exactly **32 bits**, the loop always executes 32 iterations. Each iteration performs constant-time operations, making the overall time complexity **O(1)**.
-
-## Space Complexity
-
-- **O(1)**
-
-The algorithm uses only a constant amount of extra memory (`res` and the loop variable), regardless of the input size. Therefore, the space complexity is **O(1)**.
+## Folder
+- 04-reverse-bits

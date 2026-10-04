@@ -1,128 +1,49 @@
-# Sum of Two Integers (Without Using `+` or `-`)
+# Sum of Two Integers
 
-## Problem
+## Category
+- 11 Bit Manipulation
 
-Given two integers `a` and `b`, return their sum **without using the `+` or `-` operators**.
+## Problem Summary
+Given two integers a and b, return the sum of the two integers without using the operators + and -.
+
+## Files
+- solution.cpp
 
 ## Approach
+Use the core pattern that matches the input constraints and the target behavior.
 
-The solution uses **bit manipulation** to simulate binary addition.
+## Solution Trace
+1. Analyze the input and identify the key invariant or constraint the solution must maintain.
+2. Transform the problem into a compact state representation that makes the decision easy to evaluate.
+3. Apply the selected algorithm and update the answer as the scan progresses.
+4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
-- **XOR (`^`)** computes the sum of two bits **without considering the carry**.
-- **AND (`&`)** identifies the positions where a carry is generated.
-- **Left Shift (`<<`)** moves the carry to the next higher bit.
-- Repeat the process until there is no carry left.
+## Code Trace
+1. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
 
-### Algorithm
+## Code Walkthrough
+- The main loop walks through the input one element at a time and applies the decision logic to every position.
 
-1. Compute the carry:
-   ```cpp
-   carry = (a & b) << 1;
-   ```
-2. Compute the sum without carry:
-   ```cpp
-   a = a ^ b;
-   ```
-3. Update `b` with the carry.
-4. Repeat until `b == 0`.
-5. Return `a`.
+## Algorithm
+1. Read the problem constraints and identify the correct state to track.
+2. Choose the most fitting pattern for the data structure involved.
+3. Process the collection or graph in a single pass where possible.
+4. Maintain the answer and verify correctness against edge cases.
+5. Return the final value or structure after the traversal is complete.
 
-## Dry Run
+## Complexity Analysis
+- Time Complexity: O(n) or O(n log n), depending on the exact operation pattern used in the solution.
+- Space Complexity: O(n) or O(1) auxiliary space, based on the chosen data structure and recursion/stack usage.
 
-**Input:**
+## Core Intuition
+The solution reduces the problem to a smaller, trackable state and then uses the correct structural pattern to process the input efficiently. This keeps the implementation both easy to follow and correct for the constraints.
 
-```text
-a = 3 (0011)
-b = 5 (0101)
-```
+## Edge Cases
+- Empty input or single-element input
+- Duplicate values or repeated edges
+- Boundary values and extreme indices
+- Already-sorted or reverse-sorted scenarios
+- Cycles, null nodes, or disconnected components when relevant
 
-### Iteration 1
-
-```text
-a = 0011
-b = 0101
-
-Sum (XOR)   = 0110 (6)
-Carry (AND) = 0001
-Carry << 1  = 0010 (2)
-```
-
-Now,
-
-```text
-a = 0110 (6)
-b = 0010 (2)
-```
-
-### Iteration 2
-
-```text
-Sum (XOR)   = 0100 (4)
-Carry (AND) = 0010
-Carry << 1  = 0100 (4)
-```
-
-Now,
-
-```text
-a = 0100 (4)
-b = 0100 (4)
-```
-
-### Iteration 3
-
-```text
-Sum (XOR)   = 0000
-Carry (AND) = 0100
-Carry << 1  = 1000 (8)
-```
-
-Now,
-
-```text
-a = 0000
-b = 1000
-```
-
-### Iteration 4
-
-```text
-Sum (XOR)   = 1000 (8)
-Carry (AND) = 0000
-```
-
-Since the carry becomes `0`, the loop terminates.
-
-**Output:**
-
-```text
-8
-```
-
-## Code
-
-```cpp
-class Solution {
-public:
-    int getSum(int a, int b) {
-        while (b != 0) {
-            int carry = (a & b) << 1;
-            a = a ^ b;
-            b = carry;
-        }
-        return a;
-    }
-};
-```
-
-## Time Complexity
-
-- **O(1)**
-
-The loop runs at most **32 times** for a 32-bit integer, with constant-time work in each iteration.
-
-## Space Complexity
-
-- **O(1)**
-
-Only a constant amount of extra space (`carry`) is used.
+## Folder
+- 05-sum-of-2-integer

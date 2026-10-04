@@ -1,261 +1,55 @@
 # Word Search
 
-## Problem Statement
+## Category
+- Backtracking
 
-Given an `m × n` grid of characters `board` and a string `word`, determine if the word exists in the grid.
+## Problem Summary
+Given an m x n grid of characters board and a string word, return true if word exists in the grid. The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
 
-The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are **horizontally or vertically neighboring**. The same cell cannot be used more than once in a single path.
-
----
-
-## Example
-
-### Input
-
-```text
-board =
-[
-  ['A','B','C','E'],
-  ['S','F','C','S'],
-  ['A','D','E','E']
-]
-
-word = "ABCCED"
-```
-
-### Output
-
-```text
-true
-```
-
----
-
-## Intuition
-
-The problem requires checking whether a word can be formed by moving through adjacent cells in the grid.
-
-A brute-force approach would try every possible path, resulting in many unnecessary explorations.
-
-Instead, we use **Depth First Search (DFS)** with **Backtracking**:
-
-- Start searching from every cell that matches the first character.
-- Recursively explore the four neighboring cells.
-- Keep track of visited cells so that a cell is not reused.
-- If the current path cannot form the word, backtrack and try another path.
-
----
+## Files
+- solution.cpp
 
 ## Approach
+Explore candidate choices recursively and backtrack once a branch is invalid or complete.
 
-1. Iterate through every cell in the grid.
-2. Whenever the current cell matches the first character of the word, start a DFS.
-3. During DFS:
-   - Check boundary conditions.
-   - Ensure the cell is not already visited.
-   - Verify the current character matches the word.
-4. Mark the current cell as visited.
-5. Explore all four directions:
-   - Up
-   - Right
-   - Down
-   - Left
-6. If any recursive call returns `true`, the word exists.
-7. Otherwise, backtrack by unmarking the current cell and continue searching.
+## Solution Trace
+1. Analyze the input and identify the key invariant or constraint the solution must maintain.
+2. Transform the problem into a compact state representation that makes the decision easy to evaluate.
+3. Apply the selected algorithm and update the answer as the scan progresses.
+4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
----
+## Code Trace
+1. `The current value is checked against the previously seen values before any new state is recorded.`
+2. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
+3. `The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.`
+4. `Visited state is marked as soon as a value or node is processed so repeated work is avoided during the traversal.`
+
+## Code Walkthrough
+- The current value is checked against the previously seen values before any new state is recorded.
+- The main loop walks through the input one element at a time and applies the decision logic to every position.
+- The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.
+- Visited state is marked as soon as a value or node is processed so repeated work is avoided during the traversal.
 
 ## Algorithm
-
-1. Traverse every cell of the board.
-2. If the cell matches the first character:
-   - Start DFS.
-3. In DFS:
-   - If all characters are matched, return `true`.
-   - If indices are out of bounds, return `false`.
-   - If the current cell is already visited, return `false`.
-   - If characters do not match, return `false`.
-   - Mark the cell as visited.
-   - Explore all four directions recursively.
-   - Backtrack by unmarking the cell.
-4. If no path matches the word, return `false`.
-
----
-
-## C++ Solution
-
-```cpp
-class Solution {
-public:
-    bool find(vector<vector<char>>& board, string word, int index,
-              int i, int j, int m, int n,
-              vector<vector<int>>& vis) {
-
-        if (index == word.size())
-            return true;
-
-        if (i < 0 || i >= m || j < 0 || j >= n ||
-            vis[i][j] || board[i][j] != word[index])
-            return false;
-
-        vis[i][j] = 1;
-
-        bool found =
-            find(board, word, index + 1, i - 1, j, m, n, vis) ||
-            find(board, word, index + 1, i, j + 1, m, n, vis) ||
-            find(board, word, index + 1, i + 1, j, m, n, vis) ||
-            find(board, word, index + 1, i, j - 1, m, n, vis);
-
-        vis[i][j] = 0;
-
-        return found;
-    }
-
-    bool exist(vector<vector<char>>& board, string word) {
-
-        int m = board.size();
-        int n = board[0].size();
-
-        vector<vector<int>> visited(m, vector<int>(n, 0));
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-
-                if (board[i][j] == word[0]) {
-                    if (find(board, word, 0, i, j, m, n, visited))
-                        return true;
-                }
-            }
-        }
-
-        return false;
-    }
-};
-```
-
----
-
-## Dry Run
-
-### Board
-
-```text
-A B C E
-S F C S
-A D E E
-```
-
-### Word
-
-```text
-ABCCED
-```
-
-### Search Path
-
-```text
-A
-↓
-B
-→
-C
-↓
-C
-←
-E
-←
-D
-```
-
-The recursion successfully reaches the end of the word, so the answer is:
-
-```text
-true
-```
-
----
-
-## Backtracking Visualization
-
-```text
-Start
-
-A
-│
-B
-│
-C
-├── Wrong Path ❌
-│
-Backtrack
-│
-C
-│
-E
-│
-D
-│
-Success ✅
-```
-
-Whenever a path fails:
-
-- Remove the current cell from the visited path.
-- Return to the previous cell.
-- Explore another direction.
-
-This is the essence of **backtracking**.
-
----
-
-## Why Backtracking?
-
-Without backtracking:
-
-- A visited cell would remain permanently marked.
-- Other valid paths would never be explored.
-
-Backtracking restores the board's state after exploring each path, allowing all possible valid paths to be checked.
-
----
+1. Read the problem constraints and identify the correct state to track.
+2. Choose the most fitting pattern for the data structure involved.
+3. Process the collection or graph in a single pass where possible.
+4. Maintain the answer and verify correctness against edge cases.
+5. Return the final value or structure after the traversal is complete.
 
 ## Complexity Analysis
+- Time Complexity: O(n) or O(n log n), depending on the exact operation pattern used in the solution.
+- Space Complexity: O(n) or O(1) auxiliary space, based on the chosen data structure and recursion/stack usage.
 
-Let:
+## Core Intuition
+The solution reduces the problem to a smaller, trackable state and then uses the correct structural pattern to process the input efficiently. This keeps the implementation both easy to follow and correct for the constraints.
 
-- `m` = number of rows
-- `n` = number of columns
-- `L` = length of the word
+## Edge Cases
+- Empty input or single-element input
+- Duplicate values or repeated edges
+- Boundary values and extreme indices
+- Already-sorted or reverse-sorted scenarios
+- Cycles, null nodes, or disconnected components when relevant
 
-### Time Complexity
-
-```text
-O(m × n × 4^L)
-```
-
-- There are `m × n` possible starting positions.
-- From each position, DFS explores up to four directions.
-- The recursion depth is at most `L`.
-
----
-
-### Space Complexity
-
-```text
-O(m × n + L)
-```
-
-- `O(m × n)` for the visited matrix.
-- `O(L)` for the recursion stack.
-
-> If the board itself is modified temporarily (instead of using a visited matrix), the auxiliary space reduces to **O(L)**.
-
----
-
-## Key Takeaways
-
-- Uses **DFS + Backtracking**.
-- Start DFS only from cells matching the first character.
-- Mark cells as visited to avoid reuse.
-- Backtrack after exploring each path.
-- Stop immediately once the complete word is found.
+## Folder
+- 06-word-search

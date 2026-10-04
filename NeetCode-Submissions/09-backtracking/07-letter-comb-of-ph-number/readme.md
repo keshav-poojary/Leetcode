@@ -1,109 +1,51 @@
 # Letter Combinations of a Phone Number
 
-## Problem
-Given a string containing digits from **2-9**, return all possible letter combinations that the number could represent based on the telephone keypad.
+## Category
+- Backtracking
 
-### Phone Keypad Mapping
+## Problem Summary
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order. A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
 
-| Digit | Letters |
-|-------|---------|
-| 2 | abc |
-| 3 | def |
-| 4 | ghi |
-| 5 | jkl |
-| 6 | mno |
-| 7 | pqrs |
-| 8 | tuv |
-| 9 | wxyz |
+## Files
+- solution.cpp
 
----
+## Approach
+Explore candidate choices recursively and backtrack once a branch is invalid or complete.
 
-## Approach (Backtracking)
+## Solution Trace
+1. Analyze the input and identify the key invariant or constraint the solution must maintain.
+2. Transform the problem into a compact state representation that makes the decision easy to evaluate.
+3. Apply the selected algorithm and update the answer as the scan progresses.
+4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
 
-We generate every possible combination by choosing one character for each digit.
+## Code Trace
+1. `If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.`
+2. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
 
-1. Store the mapping of digits to letters.
-2. Start from the first digit.
-3. For every letter corresponding to the current digit:
-   - Add the letter to the current string.
-   - Recursively process the next digit.
-   - Remove the last letter (backtracking).
-4. Once all digits are processed, store the generated string.
-
----
+## Code Walkthrough
+- If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.
+- The main loop walks through the input one element at a time and applies the decision logic to every position.
 
 ## Algorithm
+1. Read the problem constraints and identify the correct state to track.
+2. Choose the most fitting pattern for the data structure involved.
+3. Process the collection or graph in a single pass where possible.
+4. Maintain the answer and verify correctness against edge cases.
+5. Return the final value or structure after the traversal is complete.
 
-- Create a map for digit-to-letter mapping.
-- Initialize an empty output string.
-- Use recursion:
-  - If all digits are processed, add the output string to the answer.
-  - Otherwise, iterate over every character mapped to the current digit.
-  - Append the character.
-  - Recurse for the next digit.
-  - Remove the character before trying the next one.
+## Complexity Analysis
+- Time Complexity: O(n) or O(n log n), depending on the exact operation pattern used in the solution.
+- Space Complexity: O(n) or O(1) auxiliary space, based on the chosen data structure and recursion/stack usage.
 
----
+## Core Intuition
+The solution reduces the problem to a smaller, trackable state and then uses the correct structural pattern to process the input efficiently. This keeps the implementation both easy to follow and correct for the constraints.
 
-## Dry Run
+## Edge Cases
+- Empty input or single-element input
+- Duplicate values or repeated edges
+- Boundary values and extreme indices
+- Already-sorted or reverse-sorted scenarios
+- Cycles, null nodes, or disconnected components when relevant
 
-### Input
-```
-digits = "23"
-```
-
-### Steps
-
-```
-Start ""
-
-Digit '2' -> abc
-
-Choose 'a'
-    Digit '3' -> def
-        ad
-        ae
-        af
-
-Choose 'b'
-    bd
-    be
-    bf
-
-Choose 'c'
-    cd
-    ce
-    cf
-```
-
-### Output
-
-```
-["ad","ae","af","bd","be","bf","cd","ce","cf"]
-```
-
----
-
-## Time Complexity
-
-Let:
-
-- `N` = number of digits
-- Each digit has at most 4 letters.
-
-**Time Complexity:** `O(4^N × N)`
-
-- There are at most `4^N` combinations.
-- Each combination takes `O(N)` to construct.
-
----
-
-## Space Complexity
-
-- Recursive stack: **O(N)**
-- Output storage: **O(4^N × N)**
-
-Ignoring the output list, the auxiliary space is **O(N)**.
-
----
-
+## Folder
+- 07-letter-comb-of-ph-number

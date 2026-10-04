@@ -1,35 +1,55 @@
-# Insert Interval
+# Test Result 57. Insert Interval
 
-## Intuition
+## Category
+- Intervals
 
-Since the intervals are already sorted and non-overlapping, we can process them in one pass. The idea is to first add all intervals that come before the new interval, then merge every overlapping interval, and finally append the remaining intervals.
+## Problem Summary
+You are given an array of non-overlapping intervals intervals where intervals[i] = [starti, endi] represent the start and the end of the ith interval and intervals is sorted in ascending order by starti. You are also given an interval newInterval = [start, end] that represents the start and end of another interval. Two intervals are considered overlapping if they share at least one point. Insert newInterval into intervals such that intervals is still sorted in ascending order by starti and intervals still does not have any overlapping intervals (merge overlapping intervals if necessary).
+
+## Files
+- soluton.cpp
 
 ## Approach
+Sort or merge intervals to keep overlapping ranges compact and easy to reason about.
 
-- Traverse the intervals and add all intervals that end before the new interval begins.
-- Initialize the merged interval using `newInterval`.
-- Merge all intervals that overlap by updating:
-  - `start = min(start, currentStart)`
-  - `end = max(end, currentEnd)`
-- Add the merged interval to the answer.
-- Append all remaining intervals.
+## Solution Trace
+1. Sort the intervals by start position to normalize the input order.
+2. Merge overlapping or touching intervals using the current boundary state.
+3. Carry forward any remaining non-overlapping pieces after the merge.
+4. Return the final merged structure in the required output format.
+
+## Code Trace
+1. `The intervals are sorted so the merge logic always compares the current interval against the next valid range.`
+2. `A running merged interval is updated whenever the current interval overlaps the active boundary.`
+3. `Non-overlapping intervals are appended to preserve the final sorted output order.`
+4. `The final merged vector is returned as the result.`
+
+## Code Walkthrough
+- The intervals are sorted so the merge logic always compares the current interval against the next valid range.
+- A running merged interval is updated whenever the current interval overlaps the active boundary.
+- Non-overlapping intervals are appended to preserve the final sorted output order.
+- The final merged vector is returned as the result.
 
 ## Algorithm
-
-1. Add all non-overlapping intervals on the left.
-2. Merge all overlapping intervals.
-3. Insert the merged interval.
-4. Add all remaining intervals.
-5. Return the final list.
+1. Read the problem constraints and identify the correct state to track.
+2. Choose the most fitting pattern for the data structure involved.
+3. Process the collection or graph in a single pass where possible.
+4. Maintain the answer and verify correctness against edge cases.
+5. Return the final value or structure after the traversal is complete.
 
 ## Complexity Analysis
+- Time Complexity: O(n) or O(n log n), depending on the exact operation pattern used in the solution.
+- Space Complexity: O(n) or O(1) auxiliary space, based on the chosen data structure and recursion/stack usage.
 
-- **Time Complexity:** `O(n)`
-- **Space Complexity:** `O(n)`
+## Core Intuition
+The solution reduces the problem to a smaller, trackable state and then uses the correct structural pattern to process the input efficiently. This keeps the implementation both easy to follow and correct for the constraints.
 
-## Key Concepts
+## Edge Cases
+- Empty input or single-element input
+- Duplicate values or repeated edges
+- Boundary values and extreme indices
+- Already-sorted or reverse-sorted scenarios
+- Cycles, null nodes, or disconnected components when relevant
 
-- Greedy
-- Interval Merging
-- Arrays
-- Linear Traversal
+## Folder
+- 01-insert-intervals

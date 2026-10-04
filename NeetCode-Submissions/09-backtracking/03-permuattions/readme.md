@@ -1,233 +1,55 @@
-# 46. Permutations
-
-## Problem
-
-Given an array `nums` of **distinct integers**, return all possible permutations.
-
-### Example
-
-**Input**
-```text
-nums = [1,2,3]
-```
-
-**Output**
-```text
-[
- [1,2,3],
- [1,3,2],
- [2,1,3],
- [2,3,1],
- [3,1,2],
- [3,2,1]
-]
-```
-
----
-
-# Approach
-
-This problem is solved using **Backtracking + DFS**.
-
-At every recursive call:
-
-1. Iterate through every element.
-2. If an element has not been used (`visited[i] == false`):
-   - Mark it as visited.
-   - Add it to the current permutation.
-   - Recurse to build the remaining permutation.
-3. After recursion:
-   - Remove the last element.
-   - Mark it as unvisited.
-   - This is the **backtracking** step.
-
-The recursion continues until the current permutation contains all `n` elements.
-
----
-
-# Recursion Tree
-
-For
-
-```text
-nums = [1,2,3]
-```
-
-```text
-[]
-│
-├── 1
-│   ├── 2
-│   │   └── 3 → [1,2,3]
-│   └── 3
-│       └── 2 → [1,3,2]
-│
-├── 2
-│   ├── 1
-│   │   └── 3 → [2,1,3]
-│   └── 3
-│       └── 1 → [2,3,1]
-│
-└── 3
-    ├── 1
-    │   └── 2 → [3,1,2]
-    └── 2
-        └── 1 → [3,2,1]
-```
-
----
-
-# Algorithm
-
-1. Create an empty vector `ds` to store the current permutation.
-2. Maintain a `visited` array to track used elements.
-3. If `ds.size() == nums.size()`:
-   - Store the permutation.
-4. Otherwise:
-   - Iterate through every element.
-   - Skip already visited elements.
-   - Choose the current element.
-   - Recurse.
-   - Backtrack.
-
----
-
-# C++ Solution
-
-```cpp
-class Solution {
-public:
-    void solve(vector<vector<int>>& res,
-               vector<int>& ds,
-               vector<bool>& vis,
-               int n,
-               vector<int>& nums) {
-
-        if (ds.size() == n) {
-            res.push_back(ds);
-            return;
-        }
-
-        for (int i = 0; i < n; i++) {
-
-            if (!vis[i]) {
-
-                vis[i] = true;
-                ds.push_back(nums[i]);
-
-                solve(res, ds, vis, n, nums);
-
-                ds.pop_back();
-                vis[i] = false;
-            }
-        }
-    }
-
-    vector<vector<int>> permute(vector<int>& nums) {
-
-        vector<vector<int>> res;
-        vector<int> ds;
-        vector<bool> vis(nums.size(), false);
-
-        solve(res, ds, vis, nums.size(), nums);
-
-        return res;
-    }
-};
-```
-
----
-
-# Dry Run
-
-### Initial State
-
-```text
-ds = []
-visited = [F F F]
-```
-
-Choose `1`
-
-```text
-ds = [1]
-visited = [T F F]
-```
-
-Choose `2`
-
-```text
-ds = [1,2]
-visited = [T T F]
-```
-
-Choose `3`
-
-```text
-ds = [1,2,3]
-visited = [T T T]
-```
-
-Store answer.
-
-Backtrack
-
-```text
-pop 3
-visited = [T T F]
-```
-
-Try another choice
-
-```text
-ds = [1,3]
-visited = [T F T]
-```
-
-Continue similarly until every permutation is generated.
-
----
-
-# Complexity Analysis
-
-### Time Complexity
-
-There are **n!** permutations.
-
-Each permutation takes **O(n)** time to copy into the result.
-
-**Overall Time Complexity**
-
-```text
-O(n × n!)
-```
-
----
-
-### Space Complexity
-
-- Recursion Stack: **O(n)**
-- Visited Array: **O(n)**
-- Current Permutation: **O(n)**
-
-Ignoring the output array,
-
-```text
-O(n)
-```
-
-Including the output,
-
-```text
-O(n × n!)
-```
-
----
-
-# Key Takeaways
-
-- Uses **Depth First Search (DFS)**.
-- Uses **Backtracking** to explore every possible arrangement.
-- `visited[]` ensures every element is used only once in a permutation.
-- After recursion, undo the choice (**backtracking**) to explore the next possibility.
-- Generates exactly **n!** permutations.
+# Permutations
+
+## Category
+- Backtracking
+
+## Problem Summary
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+## Files
+- solution.cpp
+
+## Approach
+Explore candidate choices recursively and backtrack once a branch is invalid or complete.
+
+## Solution Trace
+1. Analyze the input and identify the key invariant or constraint the solution must maintain.
+2. Transform the problem into a compact state representation that makes the decision easy to evaluate.
+3. Apply the selected algorithm and update the answer as the scan progresses.
+4. Validate the result against special cases such as empty input, duplicates, boundaries, and single-element cases.
+
+## Code Trace
+1. `If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.`
+2. `The main loop walks through the input one element at a time and applies the decision logic to every position.`
+3. `Visited state is marked as soon as a value or node is processed so repeated work is avoided during the traversal.`
+4. `The stack or deque preserves the order of pending work so the algorithm can revisit states in the correct sequence.`
+
+## Code Walkthrough
+- If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.
+- The main loop walks through the input one element at a time and applies the decision logic to every position.
+- Visited state is marked as soon as a value or node is processed so repeated work is avoided during the traversal.
+- The stack or deque preserves the order of pending work so the algorithm can revisit states in the correct sequence.
+
+## Algorithm
+1. Read the problem constraints and identify the correct state to track.
+2. Choose the most fitting pattern for the data structure involved.
+3. Process the collection or graph in a single pass where possible.
+4. Maintain the answer and verify correctness against edge cases.
+5. Return the final value or structure after the traversal is complete.
+
+## Complexity Analysis
+- Time Complexity: O(n) or O(n log n), depending on the exact operation pattern used in the solution.
+- Space Complexity: O(n) or O(1) auxiliary space, based on the chosen data structure and recursion/stack usage.
+
+## Core Intuition
+The solution reduces the problem to a smaller, trackable state and then uses the correct structural pattern to process the input efficiently. This keeps the implementation both easy to follow and correct for the constraints.
+
+## Edge Cases
+- Empty input or single-element input
+- Duplicate values or repeated edges
+- Boundary values and extreme indices
+- Already-sorted or reverse-sorted scenarios
+- Cycles, null nodes, or disconnected components when relevant
+
+## Folder
+- 03-permuattions
