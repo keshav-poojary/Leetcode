@@ -28,6 +28,16 @@ Track pointers carefully and manipulate next relationships while handling edge c
 - The main loop walks through the input one element at a time and applies the decision logic to every position.
 - Sorting normalizes the structure of the input so adjacent values or intervals can be compared in a predictable order.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Handle null and head cases] --> B[Track current and previous]
+    B --> C[Rewire next pointers]
+    C --> D{More nodes left?}
+    D -- Yes --> B
+    D -- No --> E[Return updated head]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

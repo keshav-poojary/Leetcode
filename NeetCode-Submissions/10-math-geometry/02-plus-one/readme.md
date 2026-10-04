@@ -26,6 +26,12 @@ Use the core pattern that matches the input constraints and the target behavior.
 - If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.
 - The main loop walks through the input one element at a time and applies the decision logic to every position.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Read problem] --> B[Apply selected strategy] --> C[Validate edge cases] --> D[Return answer]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

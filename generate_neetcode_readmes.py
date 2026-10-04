@@ -218,6 +218,26 @@ def extract_code_walkthrough(folder: Path, category_name: str) -> list[str]:
     return steps
 
 
+def build_mermaid_diagram(category_name: str) -> str:
+    diagrams = {
+        "01.Arrays": "flowchart TD\n    A[Read input] --> B[Track seen state]\n    B --> C{Value already seen?}\n    C -- Yes --> D[Return true]\n    C -- No --> E[Insert value]\n    E --> F[Continue scan]\n    F --> G{End of array?}\n    G -- No --> B\n    G -- Yes --> H[Return false]",
+        "02.Two-Pointers": "flowchart TD\n    A[Initialize left and right] --> B[Compare values or conditions]\n    B --> C{Move toward target?}\n    C -- Yes --> D[Advance pointer]\n    C -- No --> E[Advance other pointer]\n    D --> B\n    E --> B\n    B --> F[Return result]",
+        "03.sliding-window": "flowchart TD\n    A[Set left/right pointers] --> B[Expand right]\n    B --> C{Window valid?}\n    C -- Yes --> D[Update answer]\n    C -- No --> E[Shrink left]\n    D --> B\n    E --> B\n    B --> F{End reached?}\n    F -- Yes --> G[Return best window]",
+        "04.stack": "flowchart TD\n    A[Read next value] --> B{Need to push or pop?}\n    B -- Push --> C[Push to stack]\n    B -- Pop --> D[Pop while condition holds]\n    C --> E[Continue]\n    D --> E\n    E --> F{End reached?}\n    F -- No --> A\n    F -- Yes --> G[Return stack result]",
+        "05.binary-search": "flowchart TD\n    A[Set low and high] --> B[Compute mid]\n    B --> C{Condition holds?}\n    C -- Yes --> D[Move high left]\n    C -- No --> E[Move low right]\n    D --> B\n    E --> B\n    B --> F[Return answer]",
+        "06.linked-lists": "flowchart TD\n    A[Handle null and head cases] --> B[Track current and previous]\n    B --> C[Rewire next pointers]\n    C --> D{More nodes left?}\n    D -- Yes --> B\n    D -- No --> E[Return updated head]",
+        "07-binary-tree": "flowchart TD\n    A[Visit node] --> B[Recurse/queue into children]\n    B --> C[Combine child results]\n    C --> D{At root?}\n    D -- No --> B\n    D -- Yes --> E[Return final answer]",
+        "08-heaps": "flowchart TD\n    A[Push values into heap] --> B[Peek or pop top]\n    B --> C{Is it the needed extreme?}\n    C -- Yes --> D[Update answer]\n    C -- No --> E[Continue processing]\n    D --> E\n    E --> F{Done?}\n    F -- No --> A\n    F -- Yes --> G[Return result]",
+        "09-backtracking": "flowchart TD\n    A[Choose a candidate] --> B[Recurse]\n    B --> C{Valid branch?}\n    C -- Yes --> D[Record choice]\n    C -- No --> E[Backtrack]\n    D --> F[Explore next choice]\n    E --> F\n    F --> G{All options done?}\n    G -- No --> A\n    G -- Yes --> H[Return valid solutions]",
+        "10.math-geometry": "flowchart TD\n    A[Model data mathematically] --> B[Compute formula or geometry]\n    B --> C{Check constraints?}\n    C -- Yes --> D[Finalize result]\n    C -- No --> E[Adjust edge case]\n    D --> F[Return answer]\n    E --> D",
+        "11.bit-manipulation": "flowchart TD\n    A[Convert to bit pattern] --> B[Apply mask or XOR/AND logic]\n    B --> C{Need more bit checks?}\n    C -- Yes --> B\n    C -- No --> D[Return bit-based answer]",
+        "12-intervals": "flowchart TD\n    A[Sort intervals] --> B[Compare current with next]\n    B --> C{Overlap?}\n    C -- Yes --> D[Merge ranges]\n    C -- No --> E[Append result]\n    D --> B\n    E --> B\n    B --> F[Return merged intervals]",
+        "13-greedy": "flowchart TD\n    A[Choose locally best valid move] --> B[Update state]\n    B --> C{Problem complete?}\n    C -- No --> A\n    C -- Yes --> D[Return greedy solution]",
+        "14-graph": "flowchart TD\n    A[Choose start nodes] --> B[Traverse neighbors]\n    B --> C{Visited already?}\n    C -- Yes --> D[Skip]\n    C -- No --> E[Mark visited]\n    D --> F{More nodes?}\n    E --> F\n    F -- Yes --> B\n    F -- No --> G[Check target condition]\n    G --> H[Return valid nodes]",
+    }
+    return diagrams.get(category_name, "flowchart TD\n    A[Read problem] --> B[Apply selected strategy] --> C[Validate edge cases] --> D[Return answer]")
+
+
 def compose_problem_readme(category_name: str, folder: Path) -> str:
     title, summary = read_problem_title_and_summary(folder)
     files = [p.name for p in sorted(folder.iterdir()) if p.is_file() and p.suffix.lower().lstrip(".") in {"cpp", "py", "java", "js", "ts", "cs", "go", "rs"}]
@@ -228,6 +248,7 @@ def compose_problem_readme(category_name: str, folder: Path) -> str:
     code_walkthrough = extract_code_walkthrough(folder, category_name)
     category_label = CATEGORY_ALIASES.get(category_name, category_name.replace("-", " ").title())
     problem_name = folder.name
+    mermaid = build_mermaid_diagram(category_name)
 
     return (
         f"# {title}\n\n"
@@ -238,6 +259,7 @@ def compose_problem_readme(category_name: str, folder: Path) -> str:
         f"## Solution Trace\n" + "\n".join(f"{i + 1}. {step}" for i, step in enumerate(trace)) + "\n\n"
         f"## Code Trace\n" + "\n".join(f"{i + 1}. `{step}`" for i, step in enumerate(code_walkthrough)) + "\n\n"
         f"## Code Walkthrough\n" + "\n".join(f"- {step}" for step in code_walkthrough) + "\n\n"
+        f"## Mermaid Diagram\n```mermaid\n{mermaid}\n```\n\n"
         f"## Algorithm\n1. Read the problem constraints and identify the correct state to track.\n2. Choose the most fitting pattern for the data structure involved.\n3. Process the collection or graph in a single pass where possible.\n4. Maintain the answer and verify correctness against edge cases.\n5. Return the final value or structure after the traversal is complete.\n\n"
         f"## Complexity Analysis\n- Time Complexity: O(n) or O(n log n), depending on the exact operation pattern used in the solution.\n- Space Complexity: O(n) or O(1) auxiliary space, based on the chosen data structure and recursion/stack usage.\n\n"
         f"## Core Intuition\nThe solution reduces the problem to a smaller, trackable state and then uses the correct structural pattern to process the input efficiently. This keeps the implementation both easy to follow and correct for the constraints.\n\n"

@@ -30,6 +30,19 @@ Use priority queues to always access the smallest or largest important value at 
 - The main loop walks through the input one element at a time and applies the decision logic to every position.
 - The traversal helper expands outward from the current node and only continues through valid neighbors that satisfy the movement rule.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Push values into heap] --> B[Peek or pop top]
+    B --> C{Is it the needed extreme?}
+    C -- Yes --> D[Update answer]
+    C -- No --> E[Continue processing]
+    D --> E
+    E --> F{Done?}
+    F -- No --> A
+    F -- Yes --> G[Return result]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

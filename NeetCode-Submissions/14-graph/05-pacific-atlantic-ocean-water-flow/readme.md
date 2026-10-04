@@ -30,6 +30,20 @@ Use graph traversal techniques such as DFS, BFS, or union-find to explore connec
 - A visited marker is set for each reached cell so the flood-fill does not revisit the same position unnecessarily.
 - The final output is built from the intersection of cells that can reach both oceans.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Choose start nodes] --> B[Traverse neighbors]
+    B --> C{Visited already?}
+    C -- Yes --> D[Skip]
+    C -- No --> E[Mark visited]
+    D --> F{More nodes?}
+    E --> F
+    F -- Yes --> B
+    F -- No --> G[Check target condition]
+    G --> H[Return valid nodes]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

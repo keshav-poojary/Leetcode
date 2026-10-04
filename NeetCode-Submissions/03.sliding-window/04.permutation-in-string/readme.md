@@ -30,6 +30,19 @@ Maintain a dynamic window and update counts as the window expands or shrinks to 
 - The answer is updated each time a better window is found.
 - The loop finishes with the best valid window recorded in the answer.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Set left/right pointers] --> B[Expand right]
+    B --> C{Window valid?}
+    C -- Yes --> D[Update answer]
+    C -- No --> E[Shrink left]
+    D --> B
+    E --> B
+    B --> F{End reached?}
+    F -- Yes --> G[Return best window]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

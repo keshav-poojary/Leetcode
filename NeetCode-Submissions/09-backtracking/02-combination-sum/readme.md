@@ -28,6 +28,20 @@ Explore candidate choices recursively and backtrack once a branch is invalid or 
 - The main loop walks through the input one element at a time and applies the decision logic to every position.
 - The stack or deque preserves the order of pending work so the algorithm can revisit states in the correct sequence.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Choose a candidate] --> B[Recurse]
+    B --> C{Valid branch?}
+    C -- Yes --> D[Record choice]
+    C -- No --> E[Backtrack]
+    D --> F[Explore next choice]
+    E --> F
+    F --> G{All options done?}
+    G -- No --> A
+    G -- Yes --> H[Return valid solutions]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

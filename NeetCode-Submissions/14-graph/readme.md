@@ -6,3 +6,4 @@
 - [Clone Graph](03-clone-graph/readme.md)
 - [Rotten Oranges](04-rotten-oranges/readme.md)
 - [Pacific Atlantic Water Flow](05-pacific-atlantic-ocean-water-flow/readme.md)
+- [Surrounded Regions](06-surrounding-regions/readme.md)

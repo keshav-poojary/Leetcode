@@ -26,6 +26,16 @@ Traverse the tree with DFS or BFS, carrying information through recursive or ite
 - The main loop walks through the input one element at a time and applies the decision logic to every position.
 - Visited state is marked as soon as a value or node is processed so repeated work is avoided during the traversal.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Visit node] --> B[Recurse/queue into children]
+    B --> C[Combine child results]
+    C --> D{At root?}
+    D -- No --> B
+    D -- Yes --> E[Return final answer]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

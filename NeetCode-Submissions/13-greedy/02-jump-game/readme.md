@@ -24,6 +24,15 @@ Choose the locally best valid action first while preserving correctness for the 
 ## Code Walkthrough
 - The main loop walks through the input one element at a time and applies the decision logic to every position.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Choose locally best valid move] --> B[Update state]
+    B --> C{Problem complete?}
+    C -- No --> A
+    C -- Yes --> D[Return greedy solution]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

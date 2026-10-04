@@ -28,6 +28,19 @@ Use stack-based state tracking to handle order-sensitive operations and nested s
 - The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.
 - The stack or deque preserves the order of pending work so the algorithm can revisit states in the correct sequence.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Read next value] --> B{Need to push or pop?}
+    B -- Push --> C[Push to stack]
+    B -- Pop --> D[Pop while condition holds]
+    C --> E[Continue]
+    D --> E
+    E --> F{End reached?}
+    F -- No --> A
+    F -- Yes --> G[Return stack result]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

@@ -30,6 +30,18 @@ Reduce the search space by checking the sorted property and moving the boundary 
 - Pointers move toward each other until the valid range collapses to a single answer.
 - The final pointer position is returned as the correct result.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Set low and high] --> B[Compute mid]
+    B --> C{Condition holds?}
+    C -- Yes --> D[Move high left]
+    C -- No --> E[Move low right]
+    D --> B
+    E --> B
+    B --> F[Return answer]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

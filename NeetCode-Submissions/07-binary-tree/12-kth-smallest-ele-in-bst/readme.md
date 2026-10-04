@@ -24,6 +24,16 @@ Traverse the tree with DFS or BFS, carrying information through recursive or ite
 ## Code Walkthrough
 - If the value is new, it is inserted into the tracking structure so it can be compared later in the scan.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Visit node] --> B[Recurse/queue into children]
+    B --> C[Combine child results]
+    C --> D{At root?}
+    D -- No --> B
+    D -- Yes --> E[Return final answer]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

@@ -30,6 +30,18 @@ Sort or merge intervals to keep overlapping ranges compact and easy to reason ab
 - Non-overlapping intervals are appended to preserve the final sorted output order.
 - The final merged vector is returned as the result.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Sort intervals] --> B[Compare current with next]
+    B --> C{Overlap?}
+    C -- Yes --> D[Merge ranges]
+    C -- No --> E[Append result]
+    D --> B
+    E --> B
+    B --> F[Return merged intervals]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

@@ -30,6 +30,18 @@ Use two pointers to traverse from opposite ends or different positions to reduce
 - The main loop walks through the input one element at a time and applies the decision logic to every position.
 - Sorting normalizes the structure of the input so adjacent values or intervals can be compared in a predictable order.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Initialize left and right] --> B[Compare values or conditions]
+    B --> C{Move toward target?}
+    C -- Yes --> D[Advance pointer]
+    C -- No --> E[Advance other pointer]
+    D --> B
+    E --> B
+    B --> F[Return result]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.

@@ -32,6 +32,19 @@ Use array scanning and counting patterns, keeping track of state while minimizin
 - The main loop walks through the input one element at a time and applies the decision logic to every position.
 - The function returns immediately when a duplicate is found, which keeps the solution efficient and avoids extra work.
 
+## Mermaid Diagram
+```mermaid
+flowchart TD
+    A[Read input] --> B[Track seen state]
+    B --> C{Value already seen?}
+    C -- Yes --> D[Return true]
+    C -- No --> E[Insert value]
+    E --> F[Continue scan]
+    F --> G{End of array?}
+    G -- No --> B
+    G -- Yes --> H[Return false]
+```
+
 ## Algorithm
 1. Read the problem constraints and identify the correct state to track.
 2. Choose the most fitting pattern for the data structure involved.
