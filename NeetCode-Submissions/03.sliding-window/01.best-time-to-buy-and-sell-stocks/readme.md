@@ -33,14 +33,14 @@ Maintain a dynamic window and update counts as the window expands or shrinks to 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Set left/right pointers] --> B[Expand right]
-    B --> C{Window valid?}
-    C -- Yes --> D[Update answer]
-    C -- No --> E[Shrink left]
-    D --> B
-    E --> B
-    B --> F{End reached?}
-    F -- Yes --> G[Return best window]
+    A[Initialize state] --> B[Loop over input]
+    B --> C{Check condition on current item}
+    C -- True --> D[Update answer or state]
+    C -- False --> E[Skip or continue]
+    D --> F{End loop?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Return result]
 ```
 
 ## Algorithm

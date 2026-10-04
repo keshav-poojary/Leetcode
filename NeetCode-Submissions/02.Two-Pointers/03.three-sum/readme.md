@@ -33,13 +33,14 @@ Use two pointers to traverse from opposite ends or different positions to reduce
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Initialize left and right] --> B[Compare values or conditions]
-    B --> C{Move toward target?}
-    C -- Yes --> D[Advance pointer]
-    C -- No --> E[Advance other pointer]
-    D --> B
-    E --> B
-    B --> F[Return result]
+    A[Create empty set] --> B[i = 0]
+    B --> C{ i < nums.size? }
+    C -- Yes --> D{ nums[i] in set? }
+    D -- Yes --> E[Return true]
+    D -- No --> F[Insert nums[i] into set]
+    F --> G[i = i + 1]
+    G --> C
+    C -- No --> H[Return false]
 ```
 
 ## Algorithm

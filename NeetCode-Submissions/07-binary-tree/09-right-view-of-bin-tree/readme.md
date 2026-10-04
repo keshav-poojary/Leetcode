@@ -31,11 +31,16 @@ Traverse the tree with DFS or BFS, carrying information through recursive or ite
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Visit node] --> B[Recurse/queue into children]
-    B --> C[Combine child results]
-    C --> D{At root?}
-    D -- No --> B
-    D -- Yes --> E[Return final answer]
+    A[Initialize boundary visited arrays] --> B[Choose start cells]
+    B --> C[DFS or BFS on valid neighbors]
+    C --> D{Neighbor is in bounds and can flow?}
+    D -- Yes --> E[Mark visited and continue]
+    D -- No --> F[Skip this neighbor]
+    E --> G{More neighbors?}
+    F --> G
+    G -- Yes --> C
+    G -- No --> H[Check overlap of both ocean sets]
+    H --> I[Return valid cells]
 ```
 
 ## Algorithm

@@ -33,11 +33,14 @@ Track pointers carefully and manipulate next relationships while handling edge c
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Handle null and head cases] --> B[Track current and previous]
-    B --> C[Rewire next pointers]
-    C --> D{More nodes left?}
-    D -- Yes --> B
-    D -- No --> E[Return updated head]
+    A[Create empty set] --> B[i = 0]
+    B --> C{ i < nums.size? }
+    C -- Yes --> D{ nums[i] in set? }
+    D -- Yes --> E[Return true]
+    D -- No --> F[Insert nums[i] into set]
+    F --> G[i = i + 1]
+    G --> C
+    C -- No --> H[Return false]
 ```
 
 ## Algorithm

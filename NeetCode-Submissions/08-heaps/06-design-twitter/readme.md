@@ -33,14 +33,14 @@ Use priority queues to always access the smallest or largest important value at 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Push values into heap] --> B[Peek or pop top]
-    B --> C{Is it the needed extreme?}
-    C -- Yes --> D[Update answer]
-    C -- No --> E[Continue processing]
-    D --> E
-    E --> F{Done?}
-    F -- No --> A
-    F -- Yes --> G[Return result]
+    A[Create empty set] --> B[i = 0]
+    B --> C{ i < nums.size? }
+    C -- Yes --> D{ nums[i] in set? }
+    D -- Yes --> E[Return true]
+    D -- No --> F[Insert nums[i] into set]
+    F --> G[i = i + 1]
+    G --> C
+    C -- No --> H[Return false]
 ```
 
 ## Algorithm

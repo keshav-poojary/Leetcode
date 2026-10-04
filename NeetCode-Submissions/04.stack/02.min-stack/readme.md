@@ -29,14 +29,14 @@ Use stack-based state tracking to handle order-sensitive operations and nested s
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Read next value] --> B{Need to push or pop?}
+    A[Read next value] --> B{Condition requires push or pop?}
     B -- Push --> C[Push to stack]
     B -- Pop --> D[Pop while condition holds]
-    C --> E[Continue]
+    C --> E[Continue scanning]
     D --> E
     E --> F{End reached?}
     F -- No --> A
-    F -- Yes --> G[Return stack result]
+    F -- Yes --> G[Return stack-driven result]
 ```
 
 ## Algorithm

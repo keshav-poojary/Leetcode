@@ -29,10 +29,14 @@ Choose the locally best valid action first while preserving correctness for the 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Choose locally best valid move] --> B[Update state]
-    B --> C{Problem complete?}
-    C -- No --> A
-    C -- Yes --> D[Return greedy solution]
+    A[Sort intervals or values] --> B[Track current merged range]
+    B --> C{Current overlaps next?}
+    C -- Yes --> D[Merge range]
+    C -- No --> E[Append result]
+    D --> B
+    E --> B
+    B --> F{Reached end?}
+    F -- Yes --> G[Return final merged output]
 ```
 
 ## Algorithm

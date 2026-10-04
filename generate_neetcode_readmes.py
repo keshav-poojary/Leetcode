@@ -218,24 +218,45 @@ def extract_code_walkthrough(folder: Path, category_name: str) -> list[str]:
     return steps
 
 
-def build_mermaid_diagram(category_name: str) -> str:
-    diagrams = {
-        "01.Arrays": "flowchart TD\n    A[Read input] --> B[Track seen state]\n    B --> C{Value already seen?}\n    C -- Yes --> D[Return true]\n    C -- No --> E[Insert value]\n    E --> F[Continue scan]\n    F --> G{End of array?}\n    G -- No --> B\n    G -- Yes --> H[Return false]",
-        "02.Two-Pointers": "flowchart TD\n    A[Initialize left and right] --> B[Compare values or conditions]\n    B --> C{Move toward target?}\n    C -- Yes --> D[Advance pointer]\n    C -- No --> E[Advance other pointer]\n    D --> B\n    E --> B\n    B --> F[Return result]",
-        "03.sliding-window": "flowchart TD\n    A[Set left/right pointers] --> B[Expand right]\n    B --> C{Window valid?}\n    C -- Yes --> D[Update answer]\n    C -- No --> E[Shrink left]\n    D --> B\n    E --> B\n    B --> F{End reached?}\n    F -- Yes --> G[Return best window]",
-        "04.stack": "flowchart TD\n    A[Read next value] --> B{Need to push or pop?}\n    B -- Push --> C[Push to stack]\n    B -- Pop --> D[Pop while condition holds]\n    C --> E[Continue]\n    D --> E\n    E --> F{End reached?}\n    F -- No --> A\n    F -- Yes --> G[Return stack result]",
-        "05.binary-search": "flowchart TD\n    A[Set low and high] --> B[Compute mid]\n    B --> C{Condition holds?}\n    C -- Yes --> D[Move high left]\n    C -- No --> E[Move low right]\n    D --> B\n    E --> B\n    B --> F[Return answer]",
-        "06.linked-lists": "flowchart TD\n    A[Handle null and head cases] --> B[Track current and previous]\n    B --> C[Rewire next pointers]\n    C --> D{More nodes left?}\n    D -- Yes --> B\n    D -- No --> E[Return updated head]",
-        "07-binary-tree": "flowchart TD\n    A[Visit node] --> B[Recurse/queue into children]\n    B --> C[Combine child results]\n    C --> D{At root?}\n    D -- No --> B\n    D -- Yes --> E[Return final answer]",
-        "08-heaps": "flowchart TD\n    A[Push values into heap] --> B[Peek or pop top]\n    B --> C{Is it the needed extreme?}\n    C -- Yes --> D[Update answer]\n    C -- No --> E[Continue processing]\n    D --> E\n    E --> F{Done?}\n    F -- No --> A\n    F -- Yes --> G[Return result]",
-        "09-backtracking": "flowchart TD\n    A[Choose a candidate] --> B[Recurse]\n    B --> C{Valid branch?}\n    C -- Yes --> D[Record choice]\n    C -- No --> E[Backtrack]\n    D --> F[Explore next choice]\n    E --> F\n    F --> G{All options done?}\n    G -- No --> A\n    G -- Yes --> H[Return valid solutions]",
-        "10.math-geometry": "flowchart TD\n    A[Model data mathematically] --> B[Compute formula or geometry]\n    B --> C{Check constraints?}\n    C -- Yes --> D[Finalize result]\n    C -- No --> E[Adjust edge case]\n    D --> F[Return answer]\n    E --> D",
-        "11.bit-manipulation": "flowchart TD\n    A[Convert to bit pattern] --> B[Apply mask or XOR/AND logic]\n    B --> C{Need more bit checks?}\n    C -- Yes --> B\n    C -- No --> D[Return bit-based answer]",
-        "12-intervals": "flowchart TD\n    A[Sort intervals] --> B[Compare current with next]\n    B --> C{Overlap?}\n    C -- Yes --> D[Merge ranges]\n    C -- No --> E[Append result]\n    D --> B\n    E --> B\n    B --> F[Return merged intervals]",
-        "13-greedy": "flowchart TD\n    A[Choose locally best valid move] --> B[Update state]\n    B --> C{Problem complete?}\n    C -- No --> A\n    C -- Yes --> D[Return greedy solution]",
-        "14-graph": "flowchart TD\n    A[Choose start nodes] --> B[Traverse neighbors]\n    B --> C{Visited already?}\n    C -- Yes --> D[Skip]\n    C -- No --> E[Mark visited]\n    D --> F{More nodes?}\n    E --> F\n    F -- Yes --> B\n    F -- No --> G[Check target condition]\n    G --> H[Return valid nodes]",
-    }
-    return diagrams.get(category_name, "flowchart TD\n    A[Read problem] --> B[Apply selected strategy] --> C[Validate edge cases] --> D[Return answer]")
+def build_mermaid_diagram(folder: Path, category_name: str) -> str:
+    solution_files = sorted(
+        [p for p in folder.iterdir() if p.is_file() and p.suffix.lower().lstrip(".") in {"cpp", "py", "java", "js", "ts", "cs", "go", "rs"}],
+        key=lambda p: p.name,
+    )
+    if not solution_files:
+        return "flowchart TD\n    A[Read problem] --> B[Apply selected strategy] --> C[Validate edge cases] --> D[Return answer]"
+
+    code = solution_files[0].read_text(encoding="utf-8", errors="ignore")
+    low = code.lower()
+
+    if "set<" in code or "unordered_set" in code or "set " in code.lower():
+        return "flowchart TD\n    A[Create empty set] --> B[i = 0]\n    B --> C{ i < nums.size? }\n    C -- Yes --> D{ nums[i] in set? }\n    D -- Yes --> E[Return true]\n    D -- No --> F[Insert nums[i] into set]\n    F --> G[i = i + 1]\n    G --> C\n    C -- No --> H[Return false]"
+
+    if "dfs" in low or "bfs" in low or "queue" in low:
+        return "flowchart TD\n    A[Initialize boundary visited arrays] --> B[Choose start cells]\n    B --> C[DFS or BFS on valid neighbors]\n    C --> D{Neighbor is in bounds and can flow?}\n    D -- Yes --> E[Mark visited and continue]\n    D -- No --> F[Skip this neighbor]\n    E --> G{More neighbors?}\n    F --> G\n    G -- Yes --> C\n    G -- No --> H[Check overlap of both ocean sets]\n    H --> I[Return valid cells]"
+
+    if "sort(" in low and ("merge" in low or "vector" in low.lower()):
+        return "flowchart TD\n    A[Sort intervals or values] --> B[Track current merged range]\n    B --> C{Current overlaps next?}\n    C -- Yes --> D[Merge range]\n    C -- No --> E[Append result]\n    D --> B\n    E --> B\n    B --> F{Reached end?}\n    F -- Yes --> G[Return final merged output]"
+
+    if "low" in low and "high" in low and "mid" in low:
+        return "flowchart TD\n    A[Set low and high bounds] --> B[mid = (low + high) / 2]\n    B --> C{Condition at mid is valid?}\n    C -- Yes --> D[Move high = mid]\n    C -- No --> E[Move low = mid + 1]\n    D --> B\n    E --> B\n    B --> F[Return final boundary value]"
+
+    if "stack" in low or "deque" in low:
+        return "flowchart TD\n    A[Read next value] --> B{Condition requires push or pop?}\n    B -- Push --> C[Push to stack]\n    B -- Pop --> D[Pop while condition holds]\n    C --> E[Continue scanning]\n    D --> E\n    E --> F{End reached?}\n    F -- No --> A\n    F -- Yes --> G[Return stack-driven result]"
+
+    if "queue" in low:
+        return "flowchart TD\n    A[Initialize queue with start state] --> B[Pop front item]\n    B --> C[Explore neighbors]\n    C --> D{Neighbor is valid?}\n    D -- Yes --> E[Push neighbor]\n    D -- No --> F[Skip neighbor]\n    E --> G{Queue not empty?}\n    F --> G\n    G -- Yes --> B\n    G -- No --> H[Return processed result]"
+
+    if "sort(" in low:
+        return "flowchart TD\n    A[Sort the input] --> B[Scan adjacent values or ranges]\n    B --> C{Current state satisfies rule?}\n    C -- Yes --> D[Update answer]\n    C -- No --> E[Skip or move pointer]\n    D --> B\n    E --> B\n    B --> F{End reached?}\n    F -- Yes --> G[Return sorted result]"
+
+    if "map" in low or "unordered_map" in low:
+        return "flowchart TD\n    A[Create map for counts or index state] --> B[Scan each element]\n    B --> C{Is key already tracked?}\n    C -- Yes --> D[Update or compare value]\n    C -- No --> E[Insert key with state]\n    D --> F{More elements?}\n    E --> F\n    F -- Yes --> B\n    F -- No --> G[Return computed answer]"
+
+    if "while" in low or "for" in low:
+        return "flowchart TD\n    A[Initialize state] --> B[Loop over input]\n    B --> C{Check condition on current item}\n    C -- True --> D[Update answer or state]\n    C -- False --> E[Skip or continue]\n    D --> F{End loop?}\n    E --> F\n    F -- No --> B\n    F -- Yes --> G[Return result]"
+
+    return "flowchart TD\n    A[Read input] --> B[Transform to working state] --> C[Apply logic on current item] --> D{Condition holds?}\n    D -- Yes --> E[Update answer] --> F{Done?}\n    D -- No --> F\n    F -- No --> C\n    F -- Yes --> G[Return final result]"
 
 
 def compose_problem_readme(category_name: str, folder: Path) -> str:
@@ -248,7 +269,7 @@ def compose_problem_readme(category_name: str, folder: Path) -> str:
     code_walkthrough = extract_code_walkthrough(folder, category_name)
     category_label = CATEGORY_ALIASES.get(category_name, category_name.replace("-", " ").title())
     problem_name = folder.name
-    mermaid = build_mermaid_diagram(category_name)
+    mermaid = build_mermaid_diagram(folder, category_name)
 
     return (
         f"# {title}\n\n"

@@ -29,7 +29,14 @@ Use the core pattern that matches the input constraints and the target behavior.
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Read problem] --> B[Apply selected strategy] --> C[Validate edge cases] --> D[Return answer]
+    A[Create empty set] --> B[i = 0]
+    B --> C{ i < nums.size? }
+    C -- Yes --> D{ nums[i] in set? }
+    D -- Yes --> E[Return true]
+    D -- No --> F[Insert nums[i] into set]
+    F --> G[i = i + 1]
+    G --> C
+    C -- No --> H[Return false]
 ```
 
 ## Algorithm

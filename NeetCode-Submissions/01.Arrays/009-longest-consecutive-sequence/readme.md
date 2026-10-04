@@ -29,14 +29,14 @@ Use array scanning and counting patterns, keeping track of state while minimizin
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Read input] --> B[Track seen state]
-    B --> C{Value already seen?}
-    C -- Yes --> D[Return true]
-    C -- No --> E[Insert value]
-    E --> F[Continue scan]
-    F --> G{End of array?}
-    G -- No --> B
-    G -- Yes --> H[Return false]
+    A[Sort intervals or values] --> B[Track current merged range]
+    B --> C{Current overlaps next?}
+    C -- Yes --> D[Merge range]
+    C -- No --> E[Append result]
+    D --> B
+    E --> B
+    B --> F{Reached end?}
+    F -- Yes --> G[Return final merged output]
 ```
 
 ## Algorithm

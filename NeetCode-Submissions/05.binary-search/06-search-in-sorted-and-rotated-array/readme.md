@@ -33,13 +33,13 @@ Reduce the search space by checking the sorted property and moving the boundary 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Set low and high] --> B[Compute mid]
-    B --> C{Condition holds?}
-    C -- Yes --> D[Move high left]
-    C -- No --> E[Move low right]
+    A[Set low and high bounds] --> B[mid = (low + high) / 2]
+    B --> C{Condition at mid is valid?}
+    C -- Yes --> D[Move high = mid]
+    C -- No --> E[Move low = mid + 1]
     D --> B
     E --> B
-    B --> F[Return answer]
+    B --> F[Return final boundary value]
 ```
 
 ## Algorithm

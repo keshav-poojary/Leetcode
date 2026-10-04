@@ -35,14 +35,14 @@ Use array scanning and counting patterns, keeping track of state while minimizin
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Read input] --> B[Track seen state]
-    B --> C{Value already seen?}
-    C -- Yes --> D[Return true]
-    C -- No --> E[Insert value]
-    E --> F[Continue scan]
-    F --> G{End of array?}
-    G -- No --> B
-    G -- Yes --> H[Return false]
+    A[Create empty set] --> B[i = 0]
+    B --> C{ i < nums.size? }
+    C -- Yes --> D{ nums[i] in set? }
+    D -- Yes --> E[Return true]
+    D -- No --> F[Insert nums[i] into set]
+    F --> G[i = i + 1]
+    G --> C
+    C -- No --> H[Return false]
 ```
 
 ## Algorithm

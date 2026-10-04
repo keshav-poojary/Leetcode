@@ -29,10 +29,14 @@ Choose the locally best valid action first while preserving correctness for the 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Choose locally best valid move] --> B[Update state]
-    B --> C{Problem complete?}
-    C -- No --> A
-    C -- Yes --> D[Return greedy solution]
+    A[Create map for counts or index state] --> B[Scan each element]
+    B --> C{Is key already tracked?}
+    C -- Yes --> D[Update or compare value]
+    C -- No --> E[Insert key with state]
+    D --> F{More elements?}
+    E --> F
+    F -- Yes --> B
+    F -- No --> G[Return computed answer]
 ```
 
 ## Algorithm

@@ -29,14 +29,14 @@ Use array scanning and counting patterns, keeping track of state while minimizin
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Read input] --> B[Track seen state]
-    B --> C{Value already seen?}
-    C -- Yes --> D[Return true]
-    C -- No --> E[Insert value]
-    E --> F[Continue scan]
-    F --> G{End of array?}
-    G -- No --> B
-    G -- Yes --> H[Return false]
+    A[Sort the input] --> B[Scan adjacent values or ranges]
+    B --> C{Current state satisfies rule?}
+    C -- Yes --> D[Update answer]
+    C -- No --> E[Skip or move pointer]
+    D --> B
+    E --> B
+    B --> F{End reached?}
+    F -- Yes --> G[Return sorted result]
 ```
 
 ## Algorithm

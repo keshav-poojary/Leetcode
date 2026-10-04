@@ -27,11 +27,11 @@ Traverse the tree with DFS or BFS, carrying information through recursive or ite
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Visit node] --> B[Recurse/queue into children]
-    B --> C[Combine child results]
-    C --> D{At root?}
-    D -- No --> B
-    D -- Yes --> E[Return final answer]
+    A[Read input] --> B[Transform to working state] --> C[Apply logic on current item] --> D{Condition holds?}
+    D -- Yes --> E[Update answer] --> F{Done?}
+    D -- No --> F
+    F -- No --> C
+    F -- Yes --> G[Return final result]
 ```
 
 ## Algorithm

@@ -31,11 +31,14 @@ Track pointers carefully and manipulate next relationships while handling edge c
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Handle null and head cases] --> B[Track current and previous]
-    B --> C[Rewire next pointers]
-    C --> D{More nodes left?}
-    D -- Yes --> B
-    D -- No --> E[Return updated head]
+    A[Sort intervals or values] --> B[Track current merged range]
+    B --> C{Current overlaps next?}
+    C -- Yes --> D[Merge range]
+    C -- No --> E[Append result]
+    D --> B
+    E --> B
+    B --> F{Reached end?}
+    F -- Yes --> G[Return final merged output]
 ```
 
 ## Algorithm

@@ -33,13 +33,14 @@ Sort or merge intervals to keep overlapping ranges compact and easy to reason ab
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Sort intervals] --> B[Compare current with next]
-    B --> C{Overlap?}
-    C -- Yes --> D[Merge ranges]
+    A[Sort intervals or values] --> B[Track current merged range]
+    B --> C{Current overlaps next?}
+    C -- Yes --> D[Merge range]
     C -- No --> E[Append result]
     D --> B
     E --> B
-    B --> F[Return merged intervals]
+    B --> F{Reached end?}
+    F -- Yes --> G[Return final merged output]
 ```
 
 ## Algorithm

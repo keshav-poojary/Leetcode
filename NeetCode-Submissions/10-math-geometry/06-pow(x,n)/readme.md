@@ -27,7 +27,14 @@ Use the core pattern that matches the input constraints and the target behavior.
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Read problem] --> B[Apply selected strategy] --> C[Validate edge cases] --> D[Return answer]
+    A[Create map for counts or index state] --> B[Scan each element]
+    B --> C{Is key already tracked?}
+    C -- Yes --> D[Update or compare value]
+    C -- No --> E[Insert key with state]
+    D --> F{More elements?}
+    E --> F
+    F -- Yes --> B
+    F -- No --> G[Return computed answer]
 ```
 
 ## Algorithm

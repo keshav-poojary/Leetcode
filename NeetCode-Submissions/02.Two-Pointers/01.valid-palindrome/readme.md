@@ -29,13 +29,14 @@ Use two pointers to traverse from opposite ends or different positions to reduce
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Initialize left and right] --> B[Compare values or conditions]
-    B --> C{Move toward target?}
-    C -- Yes --> D[Advance pointer]
-    C -- No --> E[Advance other pointer]
-    D --> B
-    E --> B
-    B --> F[Return result]
+    A[Initialize state] --> B[Loop over input]
+    B --> C{Check condition on current item}
+    C -- True --> D[Update answer or state]
+    C -- False --> E[Skip or continue]
+    D --> F{End loop?}
+    E --> F
+    F -- No --> B
+    F -- Yes --> G[Return result]
 ```
 
 ## Algorithm

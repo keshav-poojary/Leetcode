@@ -29,11 +29,14 @@ Track pointers carefully and manipulate next relationships while handling edge c
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Handle null and head cases] --> B[Track current and previous]
-    B --> C[Rewire next pointers]
-    C --> D{More nodes left?}
-    D -- Yes --> B
-    D -- No --> E[Return updated head]
+    A[Create map for counts or index state] --> B[Scan each element]
+    B --> C{Is key already tracked?}
+    C -- Yes --> D[Update or compare value]
+    C -- No --> E[Insert key with state]
+    D --> F{More elements?}
+    E --> F
+    F -- Yes --> B
+    F -- No --> G[Return computed answer]
 ```
 
 ## Algorithm

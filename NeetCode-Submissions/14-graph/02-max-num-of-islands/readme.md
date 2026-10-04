@@ -33,15 +33,16 @@ Use graph traversal techniques such as DFS, BFS, or union-find to explore connec
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Choose start nodes] --> B[Traverse neighbors]
-    B --> C{Visited already?}
-    C -- Yes --> D[Skip]
-    C -- No --> E[Mark visited]
-    D --> F{More nodes?}
-    E --> F
-    F -- Yes --> B
-    F -- No --> G[Check target condition]
-    G --> H[Return valid nodes]
+    A[Initialize boundary visited arrays] --> B[Choose start cells]
+    B --> C[DFS or BFS on valid neighbors]
+    C --> D{Neighbor is in bounds and can flow?}
+    D -- Yes --> E[Mark visited and continue]
+    D -- No --> F[Skip this neighbor]
+    E --> G{More neighbors?}
+    F --> G
+    G -- Yes --> C
+    G -- No --> H[Check overlap of both ocean sets]
+    H --> I[Return valid cells]
 ```
 
 ## Algorithm

@@ -33,15 +33,14 @@ Explore candidate choices recursively and backtrack once a branch is invalid or 
 ## Mermaid Diagram
 ```mermaid
 flowchart TD
-    A[Choose a candidate] --> B[Recurse]
-    B --> C{Valid branch?}
-    C -- Yes --> D[Record choice]
-    C -- No --> E[Backtrack]
-    D --> F[Explore next choice]
-    E --> F
-    F --> G{All options done?}
-    G -- No --> A
-    G -- Yes --> H[Return valid solutions]
+    A[Create empty set] --> B[i = 0]
+    B --> C{ i < nums.size? }
+    C -- Yes --> D{ nums[i] in set? }
+    D -- Yes --> E[Return true]
+    D -- No --> F[Insert nums[i] into set]
+    F --> G[i = i + 1]
+    G --> C
+    C -- No --> H[Return false]
 ```
 
 ## Algorithm
