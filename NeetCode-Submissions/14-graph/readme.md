@@ -11,3 +11,4 @@
 - [Course Schedule II](08-course-schedule-ii/readme.md)
 - [Is Graph A Tree](09-is-graph-a-tree/readme.md)
 - [Number of Connected Components](10-num-of-connect-components/readme.md)
+- [Redundant Connection](11-redundant-connections/readme.md)
